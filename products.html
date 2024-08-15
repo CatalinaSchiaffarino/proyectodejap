@@ -1,17 +1,77 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>eMercado - Todo lo que busques está aquí</title>
-
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
   <link href="css/font-awesome.min.css" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
 </head>
+<style>
+  body {
+    font-family: 'Raleway', sans-serif;
+    background-color: #e0e3f1;
+    margin: 0;
+    padding: 0;
+}
 
+h1 {
+    font-size: 24px;
+    text-align: center;
+    margin-top: 20px;
+    font-weight: bold;
+    color: #333;
+    text-shadow: 1px 1px 2px #999;
+}
+
+.product {
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    margin: 10px 0;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.product img {
+    max-width: 150px;
+    margin-right: 20px;
+    border-radius: 8px;
+}
+
+.product-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.product-info h2 {
+    font-size: 18px;
+    color: #333;
+    margin: 0 0 5px;
+    font-weight: bold;
+}
+
+.product-info p {
+    margin: 5px 0;
+    color: #555;
+}
+
+.product-info .price {
+    font-size: 16px;
+    color: #555;
+    font-weight: bold;
+}
+
+.product-info .sold {
+    font-size: 14px;
+    color: #777;
+    margin-top: 5px;
+}
+
+</style>
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
     <div class="container">
@@ -21,33 +81,20 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav w-100 justify-content-between">
-          <li class="nav-item">
-            <a class="nav-link" href="index.html">Inicio</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="categories.html">Categorías</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="sell.html">Vender</a>
-          </li>
-          <li class="nav-item">
-          </li>
+          <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="categories.html">Categorías</a></li>
+          <li class="nav-item"><a class="nav-link" href="sell.html">Vender</a></li>
         </ul>
       </div>
     </div>
   </nav>
   <main class="pb-5 container">
-    <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
-      </div>
-    </div>
+    <h1>Productos en la categoría Autos</h1>
+    <div id="products-container" class="row"></div>
   </main>
   <footer class="text-muted">
     <div class="container">
-      <p class="float-end">
-        <a href="#">Volver arriba</a>
-      </p>
+      <p class="float-end"><a href="#">Volver arriba</a></p>
       <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a></p>
     </div>
   </footer>
@@ -63,5 +110,4 @@
   <script src="js/init.js"></script>
   <script src="js/products.js"></script>
 </body>
-
 </html>
