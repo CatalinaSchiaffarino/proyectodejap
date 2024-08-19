@@ -1,15 +1,17 @@
-document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("autos").addEventListener("click", function () {
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("autos").addEventListener("click", function() {
         localStorage.setItem("catID", 101);
-        window.location = "products.html"
+        window.location.href = "products.html";
     });
-    document.getElementById("juguetes").addEventListener("click", function () {
+
+    document.getElementById("juguetes").addEventListener("click", function() {
         localStorage.setItem("catID", 102);
-        window.location = "products.html"
+        window.location.href = "products.html";
     });
-    document.getElementById("muebles").addEventListener("click", function () {
+    
+    document.getElementById("muebles").addEventListener("click", function() {
         localStorage.setItem("catID", 103);
-        window.location = "products.html"
+        window.location.href = "products.html";
     });
     //validar que el localStorage este dentro de nuestro navegador(Saber si inició sesión)
     let ObjUsuario = JSON.parse(localStorage.getItem("usuario"));

@@ -1,6 +1,6 @@
-document.addEventListener("DOMContentLoaded", (event)=>{
+document.addEventListener("DOMContentLoaded", (event) => {
     let loginBtn = document.getElementById("loginBtn");
-    loginBtn.addEventListener("click", ()=>{
+    loginBtn.addEventListener("click", () => {
         let usuario = document.getElementById("usuario").value;
         let contraseña = document.getElementById("contraseña").value;
           //Guardo Sesion con localStorage
