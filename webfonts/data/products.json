@@ -1,0 +1,36 @@
+{
+    "products": [
+        {
+            "id": 1,
+            "name": "Volkswagen Up Move 1.0 Extra Full",
+            "description": "Vehículo de único dueño con mantenimiento al día, neumáticos y batería recientes, excelente consumo de combustible, y documentación lista para transferir.",
+            "price": 14290,
+            "sold": 150,
+            "image": "webfonts/data/images/cd.png"
+        },
+        {
+            "id": 2,
+            "name": "Jetour X70 Plus Luxury 1.5 AT 7PAS Extra Full",
+            "description": "Está equipado con una ficha oficial de servicio de la marca, lo que garantiza su mantenimiento adecuado. Ha recibido su último servicio a los 19,361 km y mantiene la batería original. Ofrece un consumo medio de 14 km/l en ruta y 12 km/l en ciudad.",
+            "price": 30490,
+            "sold": 200,
+            "image": "webfonts/data/images/cd2.png"
+        },
+        {
+            "id": 3,
+            "name": "Chevrolet Montana Turbo Premier MT",
+            "description": "Camioneta con motor 1.2 nafta, potencia máxima de 130 hp, transmisión manual de 5 velocidades y dirección eléctrica.",
+            "price": 25590,
+            "sold": 75,
+            "image": "webfonts/data/images/c3.png"
+        },
+        {
+            "id": 4,
+            "name": "Citroën Xsara VTR 1.6 Extra Full",
+            "description": "Sedán en versión equipada, con características completas y disponibilidad para permuta.",
+            "price": 6490,
+            "sold": 45,
+            "image": "webfonts/data/images/cd4.png"
+        }
+    ]
+}
