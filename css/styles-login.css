@@ -1,0 +1,57 @@
+body{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../img/fondoLogin.jpeg);
+    background-size: 100%;
+}
+
+#loginBtn{
+    background-color: #07505a;
+    color: white;
+    font-weight: 900;
+    -webkit-text-stroke: 1px black;
+    font-size: 120%;
+    padding: 2px;
+    border-radius: 3px;
+    margin: 10px;
+}
+
+.alert h4{
+    color: white;
+    -webkit-text-stroke: 1px black;
+    font-weight: bolder;
+    font-size: 180%;
+    background-color: #07505a;
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+label{
+    color: black;
+    font-weight: bold;
+    text-align: left;
+}
+
+#usuario, #contraseña{
+    
+    background-color: #648191;
+    border-radius: 3px;
+    border: 0 solid;
+    width: 50%;
+    height: 30px;
+    margin: 5px;
+}
+
+.alert{
+    background-color: white;
+    width: 23%;
+    padding-top: 0;
+    padding-left: 0;
+    padding-right: 0;
+    border-radius: 17px;
+    border: 2px #07505a solid;
+}
+
+.text-muted p{
+    color: white
+}
