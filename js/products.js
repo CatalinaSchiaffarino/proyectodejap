@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const spinner = document.getElementById('spinner-wrapper');
     const productList = document.getElementById('products-container');
-    const url = 'webfonts/data/products.json';
+    const url = 'https://japceibal.github.io/emercado-api/cats_products/101.json';
 
     fetch(url)
         .then(response => {
@@ -40,8 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="product-info">
                         <h2>${product.name}</h2>
                         <p>${product.description}</p>
-                        <p class="price">${currencyFormatter.format(product.price)}</p>
-                        <p class="sold">Cantidad Vendidos: ${product.sold}</p>
+                        <p class="price">${currencyFormatter.format(product.cost)}</p>
+                        <p class="sold">Cantidad Vendidos: ${product.soldCount}</p>
                     </div>
                 </div>
             `;

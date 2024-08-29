@@ -1,9 +1,9 @@
-body{
+body {
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../img/fondoLogin.jpeg);
     background-size: 100%;
 }
 
-#loginBtn{
+#loginBtn {
     background-color: #07505a;
     color: white;
     font-weight: 900;
@@ -14,7 +14,7 @@ body{
     margin: 10px;
 }
 
-.alert h4{
+.alert h4 {
     color: white;
     -webkit-text-stroke: 1px black;
     font-weight: bolder;
@@ -26,14 +26,13 @@ body{
     margin-bottom: 10px;
 }
 
-label{
+label {
     color: black;
     font-weight: bold;
     text-align: left;
 }
 
-#usuario, #contraseña{
-    
+#usuario, #contraseña {
     background-color: #648191;
     border-radius: 3px;
     border: 0 solid;
@@ -42,7 +41,7 @@ label{
     margin: 5px;
 }
 
-.alert{
+.alert {
     background-color: white;
     width: 23%;
     padding-top: 0;
@@ -52,6 +51,121 @@ label{
     border: 2px #07505a solid;
 }
 
-.text-muted p{
-    color: white
+.text-muted p {
+    color: white;
 }
+
+@media (min-width: 1366px) {
+    .alert {
+        width: 30%;
+        height: 40%;
+    }
+    footer {
+        background-color: #88e9b094;
+        padding: 20px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        position: relative;
+        width: 100%;
+    }
+
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .alert {
+        text-align: center;
+        width: 50%;
+        height: 30%;
+    }
+
+    footer {
+        background-color: #88e9b094;
+        padding: 20px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        position: relative;
+        width: 100%;
+    }
+
+    footer .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    footer p {
+        margin: 0;
+    }
+
+    footer a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    footer a:hover {
+        text-decoration: underline;
+    }
+}
+
+@media (max-width: 320px) {
+    .alert {
+        width: 60%;
+        height: 50%;
+    }
+
+    .alert h4 {
+        font-size: 150%;
+        padding: 15px;
+    }
+
+
+    #loginBtn {
+        padding: 2px 4px; 
+        font-size: 90%;  
+        border-radius: 2px;
+        width: auto;     
+        height: auto;     }
+
+        
+    footer {
+        background-color: #88e9b094;
+        padding: 5px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        position: relative;
+        bottom: 0;
+        width: 100%;
+    }
+    
+    footer .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+    }
+    
+    footer p {
+        margin: 0;
+        font-size: 0.9em;
+    }
+    
+    footer a {
+        color: #007bff;
+        text-decoration: none;
+        font-size: 0.9em;
+    }
+    
+    footer a:hover {
+        text-decoration: underline;
+    }
+    
+}
+
+
