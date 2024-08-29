@@ -150,7 +150,11 @@ footer {
 
 @media (min-width: 1366px) {
     .alert {
+<<<<<<< HEAD
         width: 60%;
+=======
+        width: 100%;
+>>>>>>> origin
         max-width: 600px;
         padding: 20px;
     }
@@ -160,7 +164,11 @@ footer {
     }
 
     #loginBtn {
+<<<<<<< HEAD
         width: 30%;
+=======
+        width: 80%;
+>>>>>>> origin
         font-size: 110%;
         padding: 12px 24px;
     }
