@@ -118,7 +118,13 @@ label {
     #loginBtn {
         width: 30%;
         font-size: 120%;
+        padding: 2px 4px;
+        border-radius: 3px;
+        color: white;
+        background-color: #07505a;
+        border: 2px solid #07505a;
     }
+    
 
     footer {
         background-color: rgb(171, 245, 196);
