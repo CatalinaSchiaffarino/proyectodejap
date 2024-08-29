@@ -4,164 +4,170 @@ html, body {
 }
 
 body {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../img/fondoLogin.jpeg);
-    background-size: cover;
-    background-position: center;
     display: flex;
     flex-direction: column;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../img/fondoLogin.jpeg);
+    background-color: rgb(248, 249, 250);
+    font-family: 'Raleway', sans-serif;
+}
+
+main {
+    flex: 1;
+    display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.container {
+.alert-wrapper {
     display: flex;
-    flex-direction: column;
-    flex: 1;
     justify-content: center;
     align-items: center;
     width: 100%;
-    max-width: 1200px;
-    padding: 20px;
-    box-sizing: border-box;
+    height: 100%;
 }
 
 .alert {
-    background-color: white;
-    border-radius: 12px;
-    border: 2px #07505a solid;
-    padding: 50px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 90%;
-    max-width: 600px;
-    box-sizing: border-box;
-    margin: 20px 0;
-}
-
-#loginBtn {
-    background-color: #07505a;
-    color: white;
-    font-weight: 900;
-    -webkit-text-stroke: 1px black;
-    font-size: 110%;
-    padding: 8px 16px;
-    border-radius: 3px;
-    margin: 10px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.alert h4 {
-    text-align: center;
-    color: white;
-    -webkit-text-stroke: 1px black;
-    font-weight: bolder;
-    font-size: 130%;
-    background-color: #07505a;
-    border-radius: 10px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    margin-bottom: 20px;
+    max-width: 400px;
+    width: 100%;
     box-sizing: border-box;
+}
+
+.alert-heading {
+    color: #ffffff;
+    background-color: #07505a;
+    padding: 10px;
+    border-radius: 8px;
+    margin: -30px -20px 20px -20px;
+    text-align: center;
 }
 
 label {
-    color: black;
     font-weight: bold;
-    text-align: left;
     display: block;
+    margin: 10px 0 5px;
 }
 
-#usuario, #contraseña {
-    background-color: #648191;
-    border-radius: 3px;
-    border: 0 solid;
+input[type="text"], input[type="password"] {
     width: 100%;
-    max-width: 400px;
-    height: 35px;
-    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
 }
 
-.text-muted p {
-    color: rgb(0, 0, 0);
+button {
+    background-color: #07505a;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
 }
 
 footer {
-    background-color: rgb(171, 245, 196);
-    padding: 15px;
+    padding: 20px 0;
+    background-color: #a4f0df;
     text-align: center;
-    width: 100%;
-    margin-top: auto;
 }
 
-@media (max-width: 320px) {
+footer p {
+    margin: 0;
+}
+
+footer a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 1336px) and (max-height: 768px) {
+    .alert-wrapper {
+        padding-top: 100px;
+        height: auto;
+    }
+
     .alert {
-        width: 95%;
-        max-width: none;
+        text-align: center;
+        padding: 5px;
+        max-width: 400px;
+        margin: 0 auto;
+        margin-top: 0px;
+    }
+
+    .alert-heading {
+        font-size: 18px;
+    }
+
+    input[type="text"], input[type="password"] {
+        padding: 8px;
+    }
+
+    button {
+        padding: 8px 15px;
+    }
+}
+
+@media (max-width: 768px) and (min-width: 1024px) {
+    .alert-wrapper {
+        padding-top: 80px;
+    }
+
+    .alert {
         padding: 15px;
-        margin-top: 30px;
+        max-width: 300px;
     }
 
-    #usuario, #contraseña {
-        max-width: 100%;
+    .alert-heading {
+        font-size: 16px;
     }
 
-    #loginBtn {
-        width: 80%;
-        font-size: 100%;
-    }
-}
-
-@media (max-width: 568px) {
-    .alert {
-        width: 95%;
-        max-width: none;
-        padding: 15px;
+    input[type="text"], input[type="password"] {
+        padding: 8px;
     }
 
-    #usuario, #contraseña {
-        max-width: 100%;
-    }
-
-    #loginBtn {
-        width: 70%;
-        font-size: 100%;
+    button {
+        padding: 8px 15px;
     }
 }
 
-@media (min-width: 768px) and (max-width: 1024px) {
+@media (max-width: 320px) and (max-height: 568px) {
+    .alert-wrapper {
+        padding-top: 60px;
+        flex-direction: column;
+        align-items: center;
+    }
+
     .alert {
-        width: 80%;
-        max-width: 500px;
-        padding: 20px;
+        text-align: center;
+        padding: 20.1px;
+        max-width: 280px;
     }
 
-    #usuario, #contraseña {
-        max-width: 100%;
+    .alert-heading {
+        font-size: 20px;
     }
 
-    #loginBtn {
-        width: 100%;
-        font-size: 120%;
-        padding: 12px 24px;
-    }
-}
-
-@media (min-width: 1366px) {
-    .alert {
-        width: 100%;
-        max-width: 600px;
-        padding: 20px;
+    input[type="text"], input[type="password"] {
+        padding: 6px;
     }
 
-    #usuario, #contraseña {
-        max-width: 100%;
-    }
-
-    #loginBtn {
-        width: 80%;
-        font-size: 110%;
-        padding: 12px 24px;
+    button {
+        padding: 6px 12px;
+        font-size: 14px;
     }
 }
