@@ -1,6 +1,42 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
 body {
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../img/fondoLogin.jpeg);
-    background-size: 100%;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.alert {
+    background-color: white;
+    border-radius: 12px;
+    border: 2px #07505a solid;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+    max-width: 600px;
+    box-sizing: border-box;
+    margin: 20px 0;
 }
 
 #loginBtn {
@@ -8,130 +44,124 @@ body {
     color: white;
     font-weight: 900;
     -webkit-text-stroke: 1px black;
-    font-size: 120%;
-    padding: 2px;
+    font-size: 110%;
+    padding: 8px 16px;
     border-radius: 3px;
     margin: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .alert h4 {
-        text-align: center;
+    text-align: center;
     color: white;
     -webkit-text-stroke: 1px black;
     font-weight: bolder;
-    font-size: 180%;
+    font-size: 130%;
     background-color: #07505a;
-    border-radius: 15px;
-    padding: 25px;
-    text-align: center;
-    margin-bottom: 10px;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
 }
 
 label {
     color: black;
     font-weight: bold;
     text-align: left;
+    display: block;
 }
 
 #usuario, #contraseña {
     background-color: #648191;
     border-radius: 3px;
     border: 0 solid;
-    width: 50%;
-    height: 30px;
-    margin: 5px;
-}
-
-.alert {
-    background-color: white;
-    width: 23%;
-    padding-top: 0;
-    padding-left: 0;
-    padding-right: 0;
-    border-radius: 17px;
-    border: 2px #07505a solid;
+    width: 100%;
+    max-width: 400px;
+    height: 35px;
+    margin: 10px 0;
 }
 
 .text-muted p {
     color: rgb(0, 0, 0);
 }
 
-@media (max-width: 568px) {
+footer {
+    background-color: rgb(171, 245, 196);
+    padding: 15px;
+    text-align: center;
+    width: 100%;
+    margin-top: auto;
+}
+
+@media (max-width: 320px) {
     .alert {
-        width: 80%;
-        height: auto;
-        padding: 20px;
-        text-align: center;
+        width: 95%;
+        max-width: none;
+        padding: 15px;
+        margin-top: 30px;
     }
 
     #usuario, #contraseña {
-        width: 80%;
+        max-width: 100%;
     }
 
     #loginBtn {
-        width: 50%;
+        width: 80%;
         font-size: 100%;
     }
+}
 
-    footer {
-        background-color: rgb(171, 245, 196);
+@media (max-width: 568px) {
+    .alert {
+        width: 95%;
+        max-width: none;
         padding: 15px;
-        text-align: center;
+    }
+
+    #usuario, #contraseña {
+        max-width: 100%;
+    }
+
+    #loginBtn {
+        width: 70%;
+        font-size: 100%;
     }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
     .alert {
-        width: 50%;
-        height: auto;
-        padding: 30px;
-        text-align: center;
+        width: 80%;
+        max-width: 500px;
+        padding: 20px;
     }
 
     #usuario, #contraseña {
-        width: 60%;
+        max-width: 100%;
     }
 
     #loginBtn {
-        width: 40%;
-        font-size: 110%;
-    }
-
-    footer {
-        background-color: rgb(171, 245, 196);
-        padding: 20px;
-        text-align: center;
+        width: 100%;
+        font-size: 120%;
+        padding: 12px 24px;
     }
 }
 
 @media (min-width: 1366px) {
     .alert {
-        width: 30%;
-        height: auto;
-        padding: 40px;
-        text-align: center;
+        width: 60%;
+        max-width: 600px;
+        padding: 20px;
     }
 
     #usuario, #contraseña {
-        width: 50%;
+        max-width: 100%;
     }
 
-
-  #loginBtn {
+    #loginBtn {
         width: 30%;
-        font-size: 120%;
-        padding: 2px 4px;
-        border-radius: 3px;
-        color: white;
-        background-color: #07505a;
-        border: 2px solid #07505a;
-    }
-    
-
-        
-    footer {
-        background-color: rgb(171, 245, 196);
-        padding: 25px;
-        text-align: center;
+        font-size: 110%;
+        padding: 12px 24px;
     }
 }
