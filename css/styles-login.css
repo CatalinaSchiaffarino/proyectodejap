@@ -115,7 +115,8 @@ label {
         width: 50%;
     }
 
-    #loginBtn {
+
+  #loginBtn {
         width: 30%;
         font-size: 120%;
         padding: 2px 4px;
@@ -126,11 +127,10 @@ label {
     }
     
 
+        
     footer {
         background-color: rgb(171, 245, 196);
         padding: 25px;
         text-align: center;
     }
 }
-
-/*arreglo*/
