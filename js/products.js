@@ -1,7 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
     const spinner = document.getElementById('spinner-wrapper');
     const productList = document.getElementById('products-container');
-    const url = 'https://japceibal.github.io/emercado-api/cats_products/101.json';
+    const categoryId = localStorage.getItem('categoryId') || '101'; // Asegúrate de que la clave es "categoryId"
+    
+    console.log('Category ID:', categoryId); // Debugging line
+
+    const url = `https://japceibal.github.io/emercado-api/cats_products/${categoryId}.json`;
 
     fetch(url)
         .then(response => {
