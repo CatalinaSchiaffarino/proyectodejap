@@ -6,7 +6,6 @@ let currentSortCriteria = undefined;
 let minCount = undefined;
 let maxCount = undefined;
 
-// Función para ordenar las categorías según el criterio
 function sortCategories(criteria, array) {
     let result = [];
     if (criteria === ORDER_ASC_BY_NAME) {
@@ -34,13 +33,11 @@ function sortCategories(criteria, array) {
     return result;
 }
 
-// Función para establecer el identificador de categoría y redirigir a la página de productos
 function setCatID(id) {
-    localStorage.setItem("categoryId", id); // Cambiado a "categoryId"
+    localStorage.setItem("categoryId", id); 
     window.location = "products.html";
 }
 
-// Función para mostrar la lista de categorías
 function showCategoriesList() {
     let htmlContentToAppend = "";
     for (let i = 0; i < currentCategoriesArray.length; i++) {
@@ -71,7 +68,6 @@ function showCategoriesList() {
     }
 }
 
-// Función para ordenar y mostrar las categorías
 function sortAndShowCategories(sortCriteria, categoriesArray) {
     currentSortCriteria = sortCriteria;
 
@@ -81,21 +77,17 @@ function sortAndShowCategories(sortCriteria, categoriesArray) {
 
     currentCategoriesArray = sortCategories(currentSortCriteria, currentCategoriesArray);
 
-    // Muestra las categorías ordenadas
     showCategoriesList();
 }
 
-// Función que se ejecuta cuando el documento está completamente cargado
 document.addEventListener("DOMContentLoaded", function(e) {
     getJSONData(CATEGORIES_URL).then(function(resultObj) {
         if (resultObj.status === "ok") {
             currentCategoriesArray = resultObj.data;
             showCategoriesList();
-            // sortAndShowCategories(ORDER_ASC_BY_NAME, resultObj.data);
         }
     });
 
-    // Eventos para ordenar categorías
     document.getElementById("sortAsc").addEventListener("click", function() {
         sortAndShowCategories(ORDER_ASC_BY_NAME);
     });
@@ -108,7 +100,6 @@ document.addEventListener("DOMContentLoaded", function(e) {
         sortAndShowCategories(ORDER_BY_PROD_COUNT);
     });
 
-    // Evento para limpiar los filtros de rango
     document.getElementById("clearRangeFilter").addEventListener("click", function() {
         document.getElementById("rangeFilterCountMin").value = "";
         document.getElementById("rangeFilterCountMax").value = "";
@@ -119,7 +110,6 @@ document.addEventListener("DOMContentLoaded", function(e) {
         showCategoriesList();
     });
 
-    // Evento para filtrar por rango de cantidad de productos
     document.getElementById("rangeFilterCount").addEventListener("click", function() {
         minCount = document.getElementById("rangeFilterCountMin").value;
         maxCount = document.getElementById("rangeFilterCountMax").value;
