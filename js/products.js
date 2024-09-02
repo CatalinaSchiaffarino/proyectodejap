@@ -1,10 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
     const spinner = document.getElementById('spinner-wrapper');
     const productList = document.getElementById('products-container');
-    const categoryId = localStorage.getItem('categoryId') || '101'; // Asegúrate de que la clave es "categoryId"
+    const categoryId = localStorage.getItem('categoryId') || '101'; 
     
-    console.log('Category ID:', categoryId); // Debugging line
-
+    console.log('Category ID:', categoryId); 
     const url = `https://japceibal.github.io/emercado-api/cats_products/${categoryId}.json`;
 
     fetch(url)
