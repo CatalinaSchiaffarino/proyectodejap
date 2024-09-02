@@ -49,4 +49,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
         productList.innerHTML = html;
     }
+
 });
