@@ -91,6 +91,10 @@ h1 {
     margin-left: 5px;
 }
 
+#filt-container button:active, #ord-container button:active {
+    border: #2e2e2e 1px solid;
+}
+
 @media (max-width: 770px){
     #products-container {
         margin-left: 10px;
