@@ -6,6 +6,13 @@ let mayor$ = document.getElementById("mayor$");
 let menor$ = document.getElementById("menor$");
 let relevancia = document.getElementById("relevancia");
 
+
+let filtrarPrecio = document.getElementById("filtrarPrecio");
+let limpiarFiltro = document.getElementById("limpiarFiltro");
+
+let precioMin = undefined;
+let precioMax = undefined;
+
 let criterio = undefined;
 
 const url = `https://japceibal.github.io/emercado-api/cats_products/${categoryId}.json`;
@@ -83,6 +90,12 @@ document.addEventListener('DOMContentLoaded', () => {
         return result;
     };
 
+    function filtrarProductos(array, precioMax, precioMin){
+        let resultado = [];
+        resultado = array.filter((producto) => producto.cost>=precioMin && producto.cost<=precioMax);
+        return resultado;
+    };
+
     fetch(url)
         .then(response => {
             if (!response.ok) {
@@ -93,23 +106,47 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
             displayProducts(data.products);
 
+            let productos = data.products;
+
+            filtrarPrecio.addEventListener("click", () => {
+
+                if (document.getElementById("precioMin").value === ""){
+                    precioMin = 0;
+                }else{
+                    precioMin = document.getElementById("precioMin").value;
+                };
+
+                if (document.getElementById("precioMax").value === ""){
+                    precioMax = 99999999999;
+                }else{
+                    precioMax = document.getElementById("precioMax").value;
+                };
+
+                productos = filtrarProductos(productos, precioMax, precioMin);
+                displayProducts(productos);
+            });
+
+            limpiarFiltro.addEventListener("click", () => {
+                location.reload();
+            });
+
             mayor$.addEventListener("click", () => {
                 criterio = "ORDmayor$";
-                let productos = ordProductos(criterio, data.products);
+                productos = ordProductos(criterio, productos);
                 displayProducts(productos);
                 spinner.style.display = 'none';
             });
 
             menor$.addEventListener("click", () => {
                 criterio = "ORDmenor$";
-                let productos = ordProductos(criterio, data.products);
+                productos = ordProductos(criterio, productos);
                 displayProducts(productos);
                 spinner.style.display = 'none';
             });
 
             relevancia.addEventListener("click", () => {
                 criterio = "ORDrelevancia";
-                let productos = ordProductos(criterio, data.products);
+                productos = ordProductos(criterio, productos);
                 displayProducts(productos);
                 spinner.style.display = 'none';
             });
