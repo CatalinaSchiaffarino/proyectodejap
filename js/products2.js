@@ -127,7 +127,10 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             limpiarFiltro.addEventListener("click", () => {
-                location.reload();
+                document.getElementById("precioMin").value = "";
+                document.getElementById("precioMax").value = "";
+                productos = data.products;
+                displayProducts(productos);
             });
 
             mayor$.addEventListener("click", () => {
