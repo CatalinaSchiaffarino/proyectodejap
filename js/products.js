@@ -2,6 +2,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const spinner = document.getElementById('spinner-wrapper');
     const productList = document.getElementById('products-container');
     const categoryId = localStorage.getItem('categoryId') || '101'; 
+    let ObjUsuario = JSON.parse(localStorage.getItem("usuario"));
+
+    if (localStorage.getItem("usuario") && localStorage.getItem("contraseña")) {
+        document.getElementById("user").innerHTML = "Cliente: " + ObjUsuario;
+    }
+    // borrar localStorage(Cerrar Sesión)
+    document.getElementById("cerrar").addEventListener("click", function () {
+        localStorage.removeItem("usuario");
+        localStorage.removeItem("contraseña");
+    });
     
     console.log('Category ID:', categoryId); 
     const url = `https://japceibal.github.io/emercado-api/cats_products/${categoryId}.json`;

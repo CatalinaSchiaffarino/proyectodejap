@@ -1,13 +1,24 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const productID = JSON.parse(localStorage.getItem('selectedProduct'));
-    const currentCategory = document.getElementById("currentCategory");
-    const productDetailContainer = document.getElementById('product-detail');
-    const spinner = document.getElementById('spinner-wrapper');
-    const ProductUrl = `https://japceibal.github.io/emercado-api/products/${productID}.json`;
-    const myCarouselItemActive = document.getElementById('item active');
-    const myCarouselItem1 = document.getElementById("item 1");
-    const myCarouselItem2 = document.getElementById("item 2");
-    const myCarouselItem3 = document.getElementById("item 3");
+    let productID = JSON.parse(localStorage.getItem('selectedProduct'));
+    let currentCategory = document.getElementById("currentCategory");
+    let productDetailContainer = document.getElementById('product-detail');
+    let spinner = document.getElementById('spinner-wrapper');
+    let ProductUrl = `https://japceibal.github.io/emercado-api/products/${productID}.json`;
+    let myCarouselItemActive = document.getElementById('item active');
+    let myCarouselItem1 = document.getElementById("item 1");
+    let myCarouselItem2 = document.getElementById("item 2");
+    let myCarouselItem3 = document.getElementById("item 3");
+    let ObjUsuario = JSON.parse(localStorage.getItem("usuario"));
+
+    if (localStorage.getItem("usuario") && localStorage.getItem("contraseña")) {
+        document.getElementById("user").innerHTML = "Cliente: " + ObjUsuario;
+    }
+    // borrar localStorage(Cerrar Sesión)
+    document.getElementById("cerrar").addEventListener("click", function () {
+        localStorage.removeItem("usuario");
+        localStorage.removeItem("contraseña");
+    });
+    
 
     fetch(ProductUrl)
         .then(response => {
@@ -35,17 +46,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Crear y mostrar los detalles del producto
-        const currencyFormatter = new Intl.NumberFormat('es-UY', {
+        let currencyFormatter = new Intl.NumberFormat('es-UY', {
             style: 'currency',
             currency: 'USD',
             currencyDisplay: 'symbol'
         });
-
-        console.log(data.images);
-
-        const imagesHtml = data.images.map(image => `
-            <img src="${image}" alt="${data.name}">
-        `).join('');
 
         let firstImage = data.images[0];
         let secondImage = data.images[1];
@@ -55,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
         productDetailContainer.innerHTML = `
         <h1>${data.name}</h1>
         <p class = "description">${data.description}</p>
+        <p class="price">${currencyFormatter.format(data.cost)}</p>
          <h1 class="category">Categoría: ${data.category}</h1>
         <p class="sold">Cantidad Vendidos: ${data.soldCount}</p>
     `;

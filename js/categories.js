@@ -1,52 +1,62 @@
-const ORDER_ASC_BY_NAME = "AZ";
-const ORDER_DESC_BY_NAME = "ZA";
-const ORDER_BY_PROD_COUNT = "Cant.";
-let currentCategoriesArray = [];
-let currentSortCriteria = undefined;
-let minCount = undefined;
-let maxCount = undefined;
+    let ObjUsuario = JSON.parse(localStorage.getItem("usuario"));
+    const ORDER_ASC_BY_NAME = "AZ";
+    const ORDER_DESC_BY_NAME = "ZA";
+    const ORDER_BY_PROD_COUNT = "Cant.";
+    let currentCategoriesArray = [];
+    let currentSortCriteria = undefined;
+    let minCount = undefined;
+    let maxCount = undefined;
 
-function sortCategories(criteria, array) {
-    let result = [];
-    if (criteria === ORDER_ASC_BY_NAME) {
-        result = array.sort(function(a, b) {
-            if (a.name < b.name) { return -1; }
-            if (a.name > b.name) { return 1; }
-            return 0;
-        });
-    } else if (criteria === ORDER_DESC_BY_NAME) {
-        result = array.sort(function(a, b) {
-            if (a.name > b.name) { return -1; }
-            if (a.name < b.name) { return 1; }
-            return 0;
-        });
-    } else if (criteria === ORDER_BY_PROD_COUNT) {
-        result = array.sort(function(a, b) {
-            let aCount = parseInt(a.productCount);
-            let bCount = parseInt(b.productCount);
-
-            if (aCount > bCount) { return -1; }
-            if (aCount < bCount) { return 1; }
-            return 0;
-        });
+    if (localStorage.getItem("usuario") && localStorage.getItem("contraseña")) {
+        document.getElementById("user").innerHTML = "Cliente: " + ObjUsuario;
     }
-    return result;
-}
+    // borrar localStorage(Cerrar Sesión)
+    document.getElementById("cerrar").addEventListener("click", function () {
+        localStorage.removeItem("usuario");
+        localStorage.removeItem("contraseña");
+    });
 
-function setCatID(id) {
-    localStorage.setItem("categoryId", id); 
-    window.location = "products.html";
-}
+    function sortCategories(criteria, array) {
+        let result = [];
+        if (criteria === ORDER_ASC_BY_NAME) {
+            result = array.sort(function (a, b) {
+                if (a.name < b.name) { return -1; }
+                if (a.name > b.name) { return 1; }
+                return 0;
+            });
+        } else if (criteria === ORDER_DESC_BY_NAME) {
+            result = array.sort(function (a, b) {
+                if (a.name > b.name) { return -1; }
+                if (a.name < b.name) { return 1; }
+                return 0;
+            });
+        } else if (criteria === ORDER_BY_PROD_COUNT) {
+            result = array.sort(function (a, b) {
+                let aCount = parseInt(a.productCount);
+                let bCount = parseInt(b.productCount);
 
-function showCategoriesList() {
-    let htmlContentToAppend = "";
-    for (let i = 0; i < currentCategoriesArray.length; i++) {
-        let category = currentCategoriesArray[i];
+                if (aCount > bCount) { return -1; }
+                if (aCount < bCount) { return 1; }
+                return 0;
+            });
+        }
+        return result;
+    }
 
-        if (((minCount == undefined) || (minCount != undefined && parseInt(category.productCount) >= minCount)) &&
-            ((maxCount == undefined) || (maxCount != undefined && parseInt(category.productCount) <= maxCount))) {
+    function setCatID(id) {
+        localStorage.setItem("categoryId", id);
+        window.location = "products.html";
+    }
 
-            htmlContentToAppend += `
+    function showCategoriesList() {
+        let htmlContentToAppend = "";
+        for (let i = 0; i < currentCategoriesArray.length; i++) {
+            let category = currentCategoriesArray[i];
+
+            if (((minCount == undefined) || (minCount != undefined && parseInt(category.productCount) >= minCount)) &&
+                ((maxCount == undefined) || (maxCount != undefined && parseInt(category.productCount) <= maxCount))) {
+
+                htmlContentToAppend += `
             <div onclick="setCatID(${category.id})" class="list-group-item list-group-item-action cursor-active">
                 <div class="row">
                     <div class="col-3">
@@ -62,70 +72,70 @@ function showCategoriesList() {
                 </div>
             </div>
             `;
+            }
+
+            document.getElementById("cat-list-container").innerHTML = htmlContentToAppend;
         }
-
-        document.getElementById("cat-list-container").innerHTML = htmlContentToAppend;
-    }
-}
-
-function sortAndShowCategories(sortCriteria, categoriesArray) {
-    currentSortCriteria = sortCriteria;
-
-    if (categoriesArray != undefined) {
-        currentCategoriesArray = categoriesArray;
     }
 
-    currentCategoriesArray = sortCategories(currentSortCriteria, currentCategoriesArray);
+    function sortAndShowCategories(sortCriteria, categoriesArray) {
+        currentSortCriteria = sortCriteria;
 
-    showCategoriesList();
-}
-
-document.addEventListener("DOMContentLoaded", function(e) {
-    getJSONData(CATEGORIES_URL).then(function(resultObj) {
-        if (resultObj.status === "ok") {
-            currentCategoriesArray = resultObj.data;
-            showCategoriesList();
+        if (categoriesArray != undefined) {
+            currentCategoriesArray = categoriesArray;
         }
-    });
 
-    document.getElementById("sortAsc").addEventListener("click", function() {
-        sortAndShowCategories(ORDER_ASC_BY_NAME);
-    });
-
-    document.getElementById("sortDesc").addEventListener("click", function() {
-        sortAndShowCategories(ORDER_DESC_BY_NAME);
-    });
-
-    document.getElementById("sortByCount").addEventListener("click", function() {
-        sortAndShowCategories(ORDER_BY_PROD_COUNT);
-    });
-
-    document.getElementById("clearRangeFilter").addEventListener("click", function() {
-        document.getElementById("rangeFilterCountMin").value = "";
-        document.getElementById("rangeFilterCountMax").value = "";
-
-        minCount = undefined;
-        maxCount = undefined;
+        currentCategoriesArray = sortCategories(currentSortCriteria, currentCategoriesArray);
 
         showCategoriesList();
-    });
+    }
 
-    document.getElementById("rangeFilterCount").addEventListener("click", function() {
-        minCount = document.getElementById("rangeFilterCountMin").value;
-        maxCount = document.getElementById("rangeFilterCountMax").value;
+    document.addEventListener("DOMContentLoaded", function (e) {
+        getJSONData(CATEGORIES_URL).then(function (resultObj) {
+            if (resultObj.status === "ok") {
+                currentCategoriesArray = resultObj.data;
+                showCategoriesList();
+            }
+        });
 
-        if ((minCount != undefined) && (minCount != "") && (parseInt(minCount)) >= 0) {
-            minCount = parseInt(minCount);
-        } else {
+        document.getElementById("sortAsc").addEventListener("click", function () {
+            sortAndShowCategories(ORDER_ASC_BY_NAME);
+        });
+
+        document.getElementById("sortDesc").addEventListener("click", function () {
+            sortAndShowCategories(ORDER_DESC_BY_NAME);
+        });
+
+        document.getElementById("sortByCount").addEventListener("click", function () {
+            sortAndShowCategories(ORDER_BY_PROD_COUNT);
+        });
+
+        document.getElementById("clearRangeFilter").addEventListener("click", function () {
+            document.getElementById("rangeFilterCountMin").value = "";
+            document.getElementById("rangeFilterCountMax").value = "";
+
             minCount = undefined;
-        }
-
-        if ((maxCount != undefined) && (maxCount != "") && (parseInt(maxCount)) >= 0) {
-            maxCount = parseInt(maxCount);
-        } else {
             maxCount = undefined;
-        }
 
-        showCategoriesList();
+            showCategoriesList();
+        });
+
+        document.getElementById("rangeFilterCount").addEventListener("click", function () {
+            minCount = document.getElementById("rangeFilterCountMin").value;
+            maxCount = document.getElementById("rangeFilterCountMax").value;
+
+            if ((minCount != undefined) && (minCount != "") && (parseInt(minCount)) >= 0) {
+                minCount = parseInt(minCount);
+            } else {
+                minCount = undefined;
+            }
+
+            if ((maxCount != undefined) && (maxCount != "") && (parseInt(maxCount)) >= 0) {
+                maxCount = parseInt(maxCount);
+            } else {
+                maxCount = undefined;
+            }
+
+            showCategoriesList();
+        });
     });
-});

@@ -9,8 +9,13 @@
   font-weight: bold;
 }
 
+.navbar {
+  border-radius: 0 !important;
+}
+
 nav a {
-  text-decoration: none;
+  text-decoration: none !important;
+  font-size: 18px !important;
 }
 
 .bd-placeholder-img {
@@ -188,3 +193,4 @@ a.custom-card:hover {
 .checked {
   color: orange;
 }
+
