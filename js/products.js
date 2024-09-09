@@ -59,9 +59,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         contenedor.innerHTML = html;
+         }
 
         // Para guardar el ID del producto seleccionado y redireccionar a la info del producto.
-        document.getElementById('product').forEach(link => {
+        document.querySelectorAll(".product").forEach(link => {
             link.addEventListener('click', (event) => {
                 event.preventDefault();
                 let product = JSON.parse(link.getAttribute('data-product'));
@@ -69,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.location.href = 'product-info.html';
             });
         });
-    }
+    
 
     function ordProductos(criterio, array) {
         let result = [];
