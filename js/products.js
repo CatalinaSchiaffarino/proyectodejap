@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let html = '';
         products.forEach(product => {
             html += `
-                <div class="product">
+                <a href="product-info.html" class="product" data-product='${JSON.stringify(product)}'>
                     <img src="${product.image}" alt="${product.name}">
                     <div class="product-info">
                         <h2>${product.name}</h2>
@@ -46,11 +46,20 @@ document.addEventListener('DOMContentLoaded', () => {
                         <p class="price">${currencyFormatter.format(product.cost)}</p>
                         <p class="sold">Cantidad Vendidos: ${product.soldCount}</p>
                     </div>
-                </div>
+                </a>
             `;
         });
 
         productList.innerHTML = html;
-    }
 
+        // Add event listener to the "product" links
+        document.querySelectorAll('.product').forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
+                const product = JSON.parse(link.getAttribute('data-product'));
+                localStorage.setItem('selectedProduct', JSON.stringify(product.id));
+                window.location.href = 'product-info.html';
+            });
+        });
+    }
 });
