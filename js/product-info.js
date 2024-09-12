@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
     let productID = JSON.parse(localStorage.getItem('selectedProduct'));
-    let currentCategory = document.getElementById("currentCategory");
     let productDetailContainer = document.getElementById('product-detail');
     let spinner = document.getElementById('spinner-wrapper');
     let ProductUrl = `https://japceibal.github.io/emercado-api/products/${productID}.json`;
@@ -18,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.removeItem("usuario");
         localStorage.removeItem("contraseña");
     });
-    
+
 
     fetch(ProductUrl)
         .then(response => {
@@ -46,12 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Crear y mostrar los detalles del producto
-        let currencyFormatter = new Intl.NumberFormat('es-UY', {
-            style: 'currency',
-            currency: 'USD',
-            currencyDisplay: 'symbol'
-        });
-
         let firstImage = data.images[0];
         let secondImage = data.images[1];
         let thirdImage = data.images[2];
@@ -60,24 +53,26 @@ document.addEventListener('DOMContentLoaded', () => {
         productDetailContainer.innerHTML = `
         <h1>${data.name}</h1>
         <p class = "description">${data.description}</p>
-        <p class="price">${currencyFormatter.format(data.cost)}</p>
+        <p class="price">${(data.cost).toLocaleString('es-UY', {
+            style: 'currency',
+            currency: 'USD',
+            currencyDisplay: 'symbol'
+        })}</p>
          <h1 class="category">Categoría: ${data.category}</h1>
         <p class="sold">Cantidad Vendidos: ${data.soldCount}</p>
     `;
 
         myCarouselItemActive.innerHTML = `
-     <img src="${firstImage}" alt="${data.name}">
-    `;
+        <img src="${firstImage}" alt="${data.name}">`;
 
-        myCarouselItem1.innerHTML = `
-       <img src="${secondImage}" alt="${data.name}" >
-             `;
+         myCarouselItem1.innerHTML = `
+        <img src="${secondImage}" alt="${data.name}" >`;
+
         myCarouselItem2.innerHTML = `
-             <img src="${thirdImage}" alt="${data.name}">
-                   `;
+         <img src="${thirdImage}" alt="${data.name}">`;
+
         myCarouselItem3.innerHTML = `
-                   <img src="${fourthImage}" alt="${data.name}">
-                         `;
+         <img src="${fourthImage}" alt="${data.name}">`;
 
         spinner.style.display = 'none'; // Ocultar el spinner una vez cargado el producto
     }
