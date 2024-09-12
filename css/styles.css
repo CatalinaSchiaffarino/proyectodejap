@@ -8,7 +8,6 @@
 .jumbotron .display-4 {
   font-weight: bold;
 }
-
 .navbar {
   border-radius: 0 !important;
 }
@@ -16,6 +15,10 @@
 nav a {
   text-decoration: none !important;
   font-size: 18px !important;
+}
+
+.productLink {
+  text-decoration: none;
 }
 
 .bd-placeholder-img {

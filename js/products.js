@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let html = '';
         arrayProductos.forEach(product => {
             html += `
-            <a id = "product" href="product-info.html" class="product" data-product='${JSON.stringify(product)}'>
+            <a id = "product" href="product-info.html" class="productLink" data-product='${JSON.stringify(product)}'>
                 <div class="product">
                     <img src="${product.image}" alt="${product.name}">
                     <div class="product-info">
@@ -59,7 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         contenedor.innerHTML = html;
-         }
 
         // Para guardar el ID del producto seleccionado y redireccionar a la info del producto.
         document.querySelectorAll(".product").forEach(link => {
@@ -70,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.location.href = 'product-info.html';
             });
         });
-    
+     };
 
     function ordProductos(criterio, array) {
         let result = [];
