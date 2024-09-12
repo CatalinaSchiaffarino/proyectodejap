@@ -44,8 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let html = '';
         arrayProductos.forEach(product => {
             html += `
-            <a id="link" href="product-info.html" class="productLink" data-product='${JSON.stringify(product)}'>
-                <div class="product">
+                <div class="product" data-product-id="${product.id}">
                     <img src="${product.image}" alt="${product.name}">
                     <div class="product-info">
                         <h2>${product.name}</h2>
@@ -54,7 +53,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         <p class="sold">Cantidad Vendidos: ${product.soldCount}</p>
                     </div>
                 </div>
-            </a>
             `;
         });
 
@@ -62,13 +60,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     };
 
-    document.querySelectorAll("link").forEach(link => {
-        link.addEventListener('click', (event) => {
-            event.preventDefault();
-            const product = JSON.parse(link.getAttribute('data-product'));
-            localStorage.setItem('selectedProduct', JSON.stringify(product.id));
+        contenedor.addEventListener('click', (event) => {
+        let clickedProduct = event.target.closest('.product');
+        if (clickedProduct) {
+            const productId = clickedProduct.getAttribute('data-product-id');
+            localStorage.setItem('selectedProduct', productId); // Guardamos solo el ID en localStorage
             window.location.href = 'product-info.html';
-        });
+        }
     });
 
 
