@@ -62,14 +62,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     };
 
-        document.querySelectorAll("link").forEach(link => {
-            link.addEventListener('click', (event) => {
-                event.preventDefault();
-                const product = JSON.parse(link.getAttribute('data-product'));
-                localStorage.setItem('selectedProduct', JSON.stringify(product.id));
-                window.location.href = 'product-info.html';
-            });
+    document.querySelectorAll("link").forEach(link => {
+        link.addEventListener('click', (event) => {
+            event.preventDefault();
+            const product = JSON.parse(link.getAttribute('data-product'));
+            localStorage.setItem('selectedProduct', JSON.stringify(product.id));
+            window.location.href = 'product-info.html';
         });
+    });
 
 
     function ordProductos(criterio, array) {
