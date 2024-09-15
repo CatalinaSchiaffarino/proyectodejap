@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const spinner = document.getElementById('spinner-wrapper');
     const contenedor = document.getElementById('products-container');
+    const searchInput = document.getElementById('search'); // Campo de búsqueda
     const categoryId = localStorage.getItem('categoryId') || '101';
     let ObjUsuario = JSON.parse(localStorage.getItem("usuario"));
 
@@ -24,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let precioMax = undefined;
 
     let criterio = undefined;
+    let productos = []; // Para almacenar los productos cargados
 
     const url = `https://japceibal.github.io/emercado-api/cats_products/${categoryId}.json`;
 
@@ -57,10 +59,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         contenedor.innerHTML = html;
-
     };
 
-        contenedor.addEventListener('click', (event) => {
+    contenedor.addEventListener('click', (event) => {
         let clickedProduct = event.target.closest('.product');
         if (clickedProduct) {
             const productId = clickedProduct.getAttribute('data-product-id');
@@ -68,7 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
             window.location.href = 'product-info.html';
         }
     });
-
 
     function ordProductos(criterio, array) {
         let result = [];
@@ -113,6 +113,27 @@ document.addEventListener('DOMContentLoaded', () => {
         return array.filter((producto) => producto.cost >= precioMin && producto.cost <= precioMax);
     }
 
+    function buscarProductos(array, query) {
+        if (!query) return array;
+        return array.filter(product =>
+            product.name.toLowerCase().includes(query.toLowerCase()) ||
+            product.description.toLowerCase().includes(query.toLowerCase())
+        );
+    }
+
+    function updateDisplay() {
+        let filteredProducts = productos;
+
+        if (precioMin !== undefined || precioMax !== undefined) {
+            filteredProducts = filtrarProductos(filteredProducts, precioMax, precioMin);
+        }
+
+        const query = searchInput.value;
+        filteredProducts = buscarProductos(filteredProducts, query);
+
+        displayProducts(filteredProducts);
+    }
+
     fetch(url)
         .then(response => {
             if (!response.ok) {
@@ -121,43 +142,45 @@ document.addEventListener('DOMContentLoaded', () => {
             return response.json();
         })
         .then(data => {
-            displayProducts(data.products);
+            productos = data.products;
+            displayProducts(productos);
 
-            let productos = data.products;
+            searchInput.addEventListener('input', updateDisplay); // Añadir evento de búsqueda en tiempo real
 
             filtrarPrecio.addEventListener("click", () => {
                 precioMin = document.getElementById("precioMin").value || 0;
                 precioMax = document.getElementById("precioMax").value || 99999999999;
 
-                productos = filtrarProductos(productos, precioMax, precioMin);
-                displayProducts(productos);
+                updateDisplay();
             });
 
             limpiarFiltro.addEventListener("click", () => {
                 document.getElementById("precioMin").value = "";
                 document.getElementById("precioMax").value = "";
-                productos = data.products;
-                displayProducts(productos);
+                precioMin = undefined;
+                precioMax = undefined;
+                
+                updateDisplay();
             });
 
             mayor$.addEventListener("click", () => {
                 criterio = "ORDmayor$";
                 productos = ordProductos(criterio, productos);
-                displayProducts(productos);
+                updateDisplay();
                 spinner.style.display = 'none';
             });
 
             menor$.addEventListener("click", () => {
                 criterio = "ORDmenor$";
                 productos = ordProductos(criterio, productos);
-                displayProducts(productos);
+                updateDisplay();
                 spinner.style.display = 'none';
             });
 
             relevancia.addEventListener("click", () => {
                 criterio = "ORDrelevancia";
                 productos = ordProductos(criterio, productos);
-                displayProducts(productos);
+                updateDisplay();
                 spinner.style.display = 'none';
             });
         })
