@@ -96,6 +96,19 @@ h1 {
     border: #2e2e2e 1px solid;
 }
 
+#search-container{
+    margin: 10px 0;
+    font-size: 90%;
+}
+
+#search {
+    border-radius: 8px;
+    border: #bdbdbd 1px solid;
+    padding: 7px;
+    background-color: white;
+    width: 25%;
+}
+
 @media (max-width: 770px){
     #products-container {
         margin-left: 10px;
