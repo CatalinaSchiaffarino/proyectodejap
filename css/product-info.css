@@ -48,3 +48,23 @@
     color: #777;
     margin-bottom: 20px;
 }
+
+#calification-container {
+    border: #cccccc solid 1px;
+    font-size: 20px;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    align-items: center;
+    width: 50%;
+}
+
+#comentario {
+    border: #cccccc solid 1px;
+    border-radius: 8px;
+    margin-top: 20px;
+    width: 90%;
+    padding: 5px;
+    font-size: 75%;
+}
