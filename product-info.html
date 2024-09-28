@@ -14,8 +14,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-  </style>
 </head>
 
 <body>
@@ -36,27 +34,20 @@
       </div>
     </div>
   </nav>
-  <!--Carrusel inicio-->
+
   <div id="myCarousel" class="carousel slide" data-ride="carousel">
-    <!-- Indicadores-->
     <ol class="carousel-indicators">
       <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
       <li data-target="#myCarousel" data-slide-to="1"></li>
       <li data-target="#myCarousel" data-slide-to="2"></li>
       <li data-target="#myCarousel" data-slide-to="3"></li>
     </ol>
-    <!-- Imágenes -->
     <div class="carousel-inner">
-      <div class="item active" id="item active">
-      </div>
-      <div class="item" id="item 1">
-      </div>
-      <div class="item" id="item 2">
-      </div>
-      <div class="item" id="item 3">
-      </div>
+      <div class="item active" id="item active"></div>
+      <div class="item" id="item 1"></div>
+      <div class="item" id="item 2"></div>
+      <div class="item" id="item 3"></div>
     </div>
-    <!-- Controles-->
     <a class="left carousel-control" href="#myCarousel" data-slide="prev">
       <span class="glyphicon glyphicon-chevron-left"></span>
       <span class="sr-only">Previous</span>
@@ -66,9 +57,14 @@
       <span class="sr-only">Next</span>
     </a>
   </div>
+
   <div class="container">
-    <div id="product-detail" class="product-detail">
-    </div>
+    <div id="product-detail" class="product-detail"></div>
+  </div>
+
+  <div class="container">
+    <h3>Productos relacionados</h3>
+    <div id="related-products" class="row"></div>
   </div>
 
   <div class="container" id="calification-container">
@@ -83,7 +79,6 @@
     <br>
 
     <textarea id="comentario" placeholder="Déjanos tu opinión"></textarea>
-
   </div>
 
   <footer class="text-muted">
@@ -91,10 +86,10 @@
       <p class="float-end">
         <a href="#">Volver arriba</a>
       </p>
-      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a>
-      </p>
+      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a></p>
     </div>
   </footer>
+
   <div id="spinner-wrapper">
     <div class="lds-ring">
       <div></div>

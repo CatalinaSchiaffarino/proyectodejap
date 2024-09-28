@@ -68,3 +68,19 @@
     padding: 5px;
     font-size: 75%;
 }
+h3 {
+    text-align: center;
+}
+
+#related-products {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+  
+  #related-products .product {
+    margin: 10px;
+    text-align: center;
+  }
+  
