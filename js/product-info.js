@@ -4,16 +4,18 @@ document.addEventListener('DOMContentLoaded', () => {
     let relatedProductsContainer = document.getElementById('related-products');
     let spinner = document.getElementById('spinner-wrapper');
     let ProductUrl = `https://japceibal.github.io/emercado-api/products/${productID}.json`;
+    let commentsUrl = `https://japceibal.github.io/emercado-api/products_comments/${productID}.json`;
     let myCarouselItemActive = document.getElementById('item active');
     let myCarouselItem1 = document.getElementById("item 1");
     let myCarouselItem2 = document.getElementById("item 2");
     let myCarouselItem3 = document.getElementById("item 3");
     let ObjUsuario = JSON.parse(localStorage.getItem("usuario"));
+    let commentsContainer = document.getElementById("comments");
 
     if (localStorage.getItem("usuario") && localStorage.getItem("contraseña")) {
         document.getElementById("user").innerHTML = "Cliente: " + ObjUsuario;
     }
-    
+
     document.getElementById("cerrar").addEventListener("click", function () {
         localStorage.removeItem("usuario");
         localStorage.removeItem("contraseña");
@@ -23,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(response => response.json())
         .then(data => {
             showProduct(data);
-            fetchRelatedProducts(data.relatedProducts); 
+            fetchRelatedProducts(data.relatedProducts);
             spinner.style.display = 'none';
         })
         .catch(error => {
@@ -48,10 +50,10 @@ document.addEventListener('DOMContentLoaded', () => {
             <h1>${data.name}</h1>
             <p class="description">${data.description}</p>
             <p class="price">${(data.cost).toLocaleString('es-UY', {
-                style: 'currency',
-                currency: 'USD',
-                currencyDisplay: 'symbol'
-            })}</p>
+            style: 'currency',
+            currency: 'USD',
+            currencyDisplay: 'symbol'
+        })}</p>
             <h1 class="category">Categoría: ${data.category}</h1>
             <p class="sold">Cantidad Vendidos: ${data.soldCount}</p>
         `;
@@ -62,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
         myCarouselItem3.innerHTML = `<img src="${fourthImage}" alt="${data.name}">`;
     }
     function fetchRelatedProducts(relatedProducts) {
-        relatedProductsContainer.innerHTML = ''; 
+        relatedProductsContainer.innerHTML = '';
         relatedProducts.forEach(product => {
             let relatedProductHTML = `
                 <div class="col-md-3">
@@ -79,8 +81,75 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    window.loadProduct = function(id) {
+    window.loadProduct = function (id) {
         localStorage.setItem('selectedProduct', JSON.stringify(id));
-        location.reload(); 
+        location.reload();
     };
+
+
+    fetch(commentsUrl)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            showComments(data);
+            spinner.style.display = 'none';
+        })
+        .catch(error => {
+            console.error('There has been a problem:', error);
+            commentsContainer.innerHTML = '<div class="alert alert-danger">Error al cargar los comentarios.</div>';
+            spinner.style.display = 'none';
+        });
+
+    function showComments(data) {
+        commentsContainer.innerHTML = ""; // Limpiar el contenedor de comentarios
+
+        if (!data.length) {
+            commentsContainer.innerHTML = '<div>No se encontraron comentarios.</div>';
+            spinner.style.display = 'none';
+            return;
+        }
+
+        data.forEach(comment => {
+            // Crear un nuevo contenedor para cada comentario
+            let commentContainer = document.createElement("div");
+            commentContainer.className = "comment-container card mb-3 p-3";
+
+            // Crear las estrellas según la calificación
+            let starContainer = document.createElement("div");
+            starContainer.className = "star-rating-container";
+
+            if (comment.score) {
+                let score = comment.score;
+                let stars = document.createElement("div");
+                stars.className = "star-rating";
+
+                for (let i = 1; i <= 5; i++) {
+                    let star = document.createElement("i");
+                    if (i <= score) {
+                        star.className = "fas fa-star"; // Estrella llena
+                    } else {
+                        star.className = "far fa-star"; // Estrella vacía
+                    }
+                    stars.appendChild(star);
+                }
+
+                starContainer.appendChild(stars); // Añadir las estrellas al contenedor
+            }
+
+            // Crear el contenido del comentario
+            let commentHtml = `
+                    <p id ="user" class="card-title fw-bold"> ${comment.user}</p>
+                    <p id ="dateTime" class="card-subtitle mb-2 text-muted"> ${comment.dateTime}</p>
+                    <p id ="description" > ${comment.description}</p>
+                `;
+
+            // Añadir las estrellas y el contenido del comentario al contenedor
+            commentContainer.innerHTML = commentHtml;
+            commentContainer.appendChild(starContainer);
+
+            // Añadir el contenedor del comentario completo al contenedor principal de comentarios
+            commentsContainer.appendChild(commentContainer);
+        });
+    }
+
 });
