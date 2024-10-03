@@ -70,6 +70,18 @@
     font-size: 75%;
 }
 
+#btnEnviar {
+    border-radius: 8px;
+    border: #bdbdbd 1px solid;
+    padding: 7px;
+    font-size: 18px;
+    width: 10%;
+}
+
+#btnEnviar:active {
+    border: #2e2e2e 1px solid;
+}
+
 h3 {
     text-align: center;
 }
