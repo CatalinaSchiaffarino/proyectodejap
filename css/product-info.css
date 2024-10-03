@@ -1,13 +1,13 @@
 .product-detail {
     margin-top: 20px;
-    padding: 20px ;
+    padding: 20px;
     background-color: #ffffff;
     border: 1px solid #cccccc;
     border-radius: 8px;
     display: flex;
     flex-direction: column;
-    align-items: center ; 
-    text-align: center ;
+    align-items: center;
+    text-align: center;
 }
 
 #myCarousel {
@@ -53,6 +53,7 @@
     border: #cccccc solid 1px;
     font-size: 20px;
     margin-top: 20px;
+    margin-bottom: 50px;
     padding: 20px;
     border-radius: 8px;
     text-align: center;
@@ -68,6 +69,7 @@
     padding: 5px;
     font-size: 75%;
 }
+
 h3 {
     text-align: center;
 }
@@ -77,10 +79,29 @@ h3 {
     justify-content: center;
     flex-wrap: wrap;
     margin-top: 20px;
-  }
-  
-  #related-products .product {
+}
+
+#related-products .product {
     margin: 10px;
     text-align: center;
-  }
-  
+}
+
+.star-rating-container {
+    margin-bottom: 10px;
+}
+
+.star-rating i {
+    font-size: 1.2em;
+}
+
+.comment-container {
+    margin-top: 30px;
+}
+
+#description {
+    font-size: large;
+}
+
+i {
+    color: #F2C12E;
+}
