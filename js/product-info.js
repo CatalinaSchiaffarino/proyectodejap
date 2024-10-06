@@ -173,7 +173,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
     function showComments(data) {
-        //commentsContainer.innerHTML = ""; // Limpiar el contenedor de comentarios
 
         if (!data.length) {
             commentsContainer.innerHTML = '<div>No se encontraron comentarios.</div>';
