@@ -75,7 +75,7 @@
     border: #bdbdbd 1px solid;
     padding: 7px;
     font-size: 18px;
-    width: 10%;
+    width: 100px;
 }
 
 #btnEnviar:active {
@@ -114,6 +114,6 @@ h3 {
     font-size: large;
 }
 
-i {
+i, span {
     color: #F2C12E;
 }

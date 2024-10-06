@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let myCarouselItem3 = document.getElementById("item 3");
     let ObjUsuario = JSON.parse(localStorage.getItem("usuario"));
     let commentsContainer = document.getElementById("comments");
+    let btnEnviar = document.getElementById("btnEnviar");
 
     if (localStorage.getItem("usuario") && localStorage.getItem("contraseña")) {
         document.getElementById("user").innerHTML = "Cliente: " + ObjUsuario;
@@ -87,12 +88,83 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
 
+    let comentario;
+    function agregarComentario(calificacion){
+        let fecha = new Date();
+        comentario = {
+            product: productID,
+            score: calificacion,
+            description: document.getElementById("comentario").value,
+            user: ObjUsuario,
+            dateTime: fecha.getFullYear() + "-" + ("0"+fecha.getMonth()).slice(-2) + "-" + ("0"+fecha.getDay()).slice(-2) + " " + ("0"+fecha.getHours()).slice(-2) + ":" + ("0"+fecha.getMinutes()).slice(-2) + ":" + ("0"+fecha.getSeconds()).slice(-2),
+        }
+    }
+
+
     fetch(commentsUrl)
         .then(response => response.json())
         .then(data => {
             console.log(data)
             showComments(data);
             spinner.style.display = 'none';
+
+            let calificacion;
+
+            document.getElementById("star1").addEventListener("click", () => {
+                calificacion = 1;
+                document.getElementById("star1").className = "fas fa-star";
+                document.getElementById("star2").className = "far fa-star";
+                document.getElementById("star3").className = "far fa-star";
+                document.getElementById("star4").className = "far fa-star";
+                document.getElementById("star5").className = "far fa-star";
+                agregarComentario(calificacion);
+            })
+
+            document.getElementById("star2").addEventListener("click", () => {
+                calificacion = 2;
+                document.getElementById("star1").className = "fas fa-star";
+                document.getElementById("star2").className = "fas fa-star";
+                document.getElementById("star3").className = "far fa-star";
+                document.getElementById("star4").className = "far fa-star";
+                document.getElementById("star5").className = "far fa-star";
+                agregarComentario(calificacion);
+            })
+
+            document.getElementById("star3").addEventListener("click", () => {
+                calificacion = 3;
+                document.getElementById("star1").className = "fas fa-star";
+                document.getElementById("star2").className = "fas fa-star";
+                document.getElementById("star3").className = "fas fa-star";
+                document.getElementById("star4").className = "far fa-star";
+                document.getElementById("star5").className = "far fa-star";
+                agregarComentario(calificacion);
+            })
+
+            document.getElementById("star4").addEventListener("click", () => {
+                calificacion = 4;
+                document.getElementById("star1").className = "fas fa-star";
+                document.getElementById("star2").className = "fas fa-star";
+                document.getElementById("star3").className = "fas fa-star";
+                document.getElementById("star4").className = "fas fa-star";
+                document.getElementById("star5").className = "far fa-star";
+                agregarComentario(calificacion);
+            })
+
+            document.getElementById("star5").addEventListener("click", () => {
+                calificacion = 5;
+                document.getElementById("star1").className = "fas fa-star";
+                document.getElementById("star2").className = "fas fa-star";
+                document.getElementById("star3").className = "fas fa-star";
+                document.getElementById("star4").className = "fas fa-star";
+                document.getElementById("star5").className = "fas fa-star";
+                agregarComentario(calificacion);
+            })
+
+            btnEnviar.addEventListener("click", () => {
+                agregarComentario(calificacion);
+                showComments([comentario]);
+                document.getElementById("comentario").value = "";
+            });
         })
         .catch(error => {
             console.error('There has been a problem:', error);
@@ -101,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
     function showComments(data) {
-        commentsContainer.innerHTML = ""; // Limpiar el contenedor de comentarios
+        //commentsContainer.innerHTML = ""; // Limpiar el contenedor de comentarios
 
         if (!data.length) {
             commentsContainer.innerHTML = '<div>No se encontraron comentarios.</div>';
