@@ -117,7 +117,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById("star3").className = "far fa-star";
                 document.getElementById("star4").className = "far fa-star";
                 document.getElementById("star5").className = "far fa-star";
-                agregarComentario(calificacion);
             })
 
             document.getElementById("star2").addEventListener("click", () => {
@@ -127,7 +126,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById("star3").className = "far fa-star";
                 document.getElementById("star4").className = "far fa-star";
                 document.getElementById("star5").className = "far fa-star";
-                agregarComentario(calificacion);
             })
 
             document.getElementById("star3").addEventListener("click", () => {
@@ -137,7 +135,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById("star3").className = "fas fa-star";
                 document.getElementById("star4").className = "far fa-star";
                 document.getElementById("star5").className = "far fa-star";
-                agregarComentario(calificacion);
             })
 
             document.getElementById("star4").addEventListener("click", () => {
@@ -147,7 +144,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById("star3").className = "fas fa-star";
                 document.getElementById("star4").className = "fas fa-star";
                 document.getElementById("star5").className = "far fa-star";
-                agregarComentario(calificacion);
             })
 
             document.getElementById("star5").addEventListener("click", () => {
@@ -157,7 +153,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById("star3").className = "fas fa-star";
                 document.getElementById("star4").className = "fas fa-star";
                 document.getElementById("star5").className = "fas fa-star";
-                agregarComentario(calificacion);
             })
 
             btnEnviar.addEventListener("click", () => {
