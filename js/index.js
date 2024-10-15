@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
         location.href = "login.html";
     } else {
         // Asegúrate de usar una propiedad específica
-        document.getElementById("user").innerHTML = "Cliente: " + ObjUsuario.email; // Accede a la propiedad correcta
+        document.getElementById("user").innerHTML = ObjUsuario.email; // Accede a la propiedad correcta
     }
 
     // Borrar localStorage (Cerrar Sesión)

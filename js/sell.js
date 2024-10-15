@@ -146,4 +146,10 @@ document.addEventListener("DOMContentLoaded", function(e){
             });
         }
     });
+    // Obtén el tema guardado en localStorage
+   let savedTheme = localStorage.getItem("theme") || "light";
+        
+   // Aplica el tema al documento
+   document.documentElement.setAttribute("data-theme", savedTheme);
+   console.log("Theme aplicado en esta página:", savedTheme);
 });

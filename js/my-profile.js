@@ -68,11 +68,28 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("userProfile", JSON.stringify(userProfile));
         alert("Datos guardados correctamente!");
     }
+    let switchBtn = document.getElementById("switch__btn");
+    
+    /* Establecemos el theme */
+    let setTheme = (theme) => {
+        localStorage.setItem("theme", theme);
+        document.documentElement.setAttribute("data-theme", theme);
+    }
 
-    const modoNocheSwitch = document.getElementById("modoNoche");
-    modoNocheSwitch.addEventListener("change", function() {
-        document.body.classList.toggle("night-mode", modoNocheSwitch.checked);
-    });
+    /* Cambiar entre los temas */
+    let toggleTheme = () => {
+        let currentTheme = localStorage.getItem("theme");
+        let switchTheme = currentTheme === "dark" ? "light" : "dark";
+        setTheme(switchTheme);
+    }
+
+    /* Aplicamos el theme guardado al cargar la página */
+    let savedTheme = localStorage.getItem("theme") || "light"; // Por defecto "light" si no hay tema guardado
+    setTheme(savedTheme);
+
+    /* Al hacer click en el botón, cambia el tema */
+    switchBtn.addEventListener("click", toggleTheme);
+
 
     document.getElementById("cerrar").addEventListener("click", function () {
         localStorage.removeItem("usuario");
