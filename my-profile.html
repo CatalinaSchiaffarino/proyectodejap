@@ -32,7 +32,10 @@
     <div class="profile-container">
       <div class="profile-pic-container">
         <img id="profilePicture" src="img/fotoperfil.png" alt="Foto de perfil">
-        <input type="file" class="form-control" id="fotoPerfil" accept="image/*">
+        <label for="fotoPerfil" class="custom-file-upload btn btn-primary">
+          Seleccionar imagen
+        </label>
+        <input type="file" id="fotoPerfil" class="form-control" accept="image/*" style="display: none;">
       </div>
       <div class="form-container">
         <form id="profileForm">

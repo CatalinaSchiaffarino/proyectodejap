@@ -20,15 +20,19 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    // Accedemos al input de la imágen
     const fileInput = document.getElementById("fotoPerfil");
+
+    // Al cambiar la imágen 
     fileInput.addEventListener("change", function(event) {
-        const file = event.target.files[0];
+        const file = event.target.files[0];  // Obtenemos el archivo seleccionado 
         if (file) {
-            const reader = new FileReader();
+            const reader = new FileReader();  // FileReader para leer el archivo seleccionado
             reader.onload = function(e) {
+                // Mostramos la imágen
                 document.getElementById("profilePicture").src = e.target.result;
             };
-            reader.readAsDataURL(file);
+            reader.readAsDataURL(file); 
         }
     });
 
@@ -42,14 +46,17 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
         let fotoPerfil = document.getElementById("profilePicture").src;
+        // Si el usuario seleccionó una nueva imagen en el input de archivo
         if (fileInput.files.length > 0) {
-            const reader = new FileReader();
+            const reader = new FileReader();  // Creamos otro FileReader para leer el archivo
             reader.onload = function(e) {
+                // Actualizamos la variable fotoPerfil con la nueva imagen en base64
                 fotoPerfil = e.target.result;
-                saveUserProfile(fotoPerfil);
+                saveUserProfile(fotoPerfil);  // Guardamos
             };
-            reader.readAsDataURL(fileInput.files[0]);
+            reader.readAsDataURL(fileInput.files[0]);  // Leemos el archivo seleccionado como base64
         } else {
+            // Si no se seleccionó ninguna nueva imagen, guardamos el perfil con la imagen actual
             saveUserProfile(fotoPerfil);
         }
     });
@@ -62,12 +69,14 @@ document.addEventListener("DOMContentLoaded", () => {
             segundoApellido: document.getElementById("segundoApellido").value,
             email: document.getElementById("email").value,
             telefono: document.getElementById("telefono").value,
-            fotoPerfil: fotoPerfil
+            fotoPerfil: fotoPerfil  // Guardamos la imagen (base64) en el perfil
         };
-        console.log("Guardando usuario en localStorage:", userProfile);
+
+        // Guardamos el objeto userProfile en localStorage
         localStorage.setItem("userProfile", JSON.stringify(userProfile));
         alert("Datos guardados correctamente!");
     }
+
     let switchBtn = document.getElementById("switch__btn");
     
     /* Establecemos el theme */
