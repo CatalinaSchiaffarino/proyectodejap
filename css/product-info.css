@@ -117,3 +117,8 @@ h3 {
 i, span {
     color: #F2C12E;
 }
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(100%); /* Esto invierte el color blanco predeterminado a negro */
+}
