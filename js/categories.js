@@ -7,15 +7,6 @@ let currentSortCriteria = undefined;
 let minCount = undefined;
 let maxCount = undefined;
 
-<<<<<<< HEAD
-    if (localStorage.getItem("usuario") && localStorage.getItem("contraseña")) {
-        document.getElementById("user").innerHTML = "Cliente: " + ObjUsuario.email;
-    }
-    // borrar localStorage(Cerrar Sesión)
-    document.getElementById("cerrar").addEventListener("click", function () {
-        localStorage.removeItem("usuario");
-        localStorage.removeItem("contraseña");
-=======
 // Obtén el tema guardado en localStorage
 let savedTheme = localStorage.getItem("theme") || "light";
 
@@ -49,7 +40,6 @@ function sortCategories(criteria, array) {
         return 1;
       }
       return 0;
->>>>>>> origin
     });
   } else if (criteria === ORDER_DESC_BY_NAME) {
     result = array.sort(function (a, b) {
