@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
     location.href = "login.html";
   } else {
     // Asegúrate de usar una propiedad específica
-    document.getElementById("user").innerHTML =  ObjUsuario.email; // Accede a la propiedad correcta
+    document.getElementById("user").innerHTML =  "Cliente: " + ObjUsuario.email; // Accede a la propiedad correcta
   }
 
   document.getElementById("cerrar").addEventListener("click", function () {
@@ -54,14 +54,14 @@ document.addEventListener("DOMContentLoaded", () => {
     let fourthImage = data.images[3];
 
     productDetailContainer.innerHTML = `
-            <h1>${data.name}</h1>
+            <h2 id="info-titulo">${data.name}</h2>
             <p class="description">${data.description}</p>
             <p class="price">${data.cost.toLocaleString("es-UY", {
               style: "currency",
               currency: "USD",
               currencyDisplay: "symbol",
             })}</p>
-            <h1 class="category">Categoría: ${data.category}</h1>
+            <h2 class="category">Categoría: ${data.category}</h2>
             <p class="sold">Cantidad Vendidos: ${data.soldCount}</p>
         `;
 

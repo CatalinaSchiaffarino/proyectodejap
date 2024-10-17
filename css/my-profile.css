@@ -1,6 +1,6 @@
 
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css");
-h2 {
+#perfil-titulo {
     color: #2c2c2c;
     background-color: #ececec;
     text-align: center;
@@ -11,8 +11,8 @@ h2 {
     font-weight: bold;
   }
 
-  .container {
-    max-width: 800px;
+  #contenedor-perfil {
+    max-width: 1000px;
   }
 
   .profile-container {
@@ -47,13 +47,17 @@ h2 {
     --text: #121212  !important;
     --contentColor: #c9a00d;
     --translate: 0%;
-    --background: rgba(255, 255, 255, 0.8) !important;
+    --background: #e0e3f1 !important;
+    --color-border: rgb(255, 255, 255);
+    --color-elements: white;
     --text: #121212 !important;
     --filter: brightness() contrast() !important;
 }
 
 [data-theme="dark"] {
     --background: #121212 !important;
+    --color-elements: rgb(43, 43, 43);
+    --color-border: rgb(27, 27, 27);
     --color:#ffffff !important;
     --text: rgba(255, 255, 255, 0.8) !important;
     --bgSwitch: #000 !important;
@@ -87,11 +91,24 @@ h2 {
     transform: translateX(var(--translate));
     transition: transform 0.8s;
 }
-body, div, h1, h2, p, label, input, a, textarea, li, select, nav, button, ul {
+body, h1, select{
     background-color: var(--background) !important;
     color: var(--text) !important;
     transition: background-color, color 0.8s !important;
 }
+
+button, input, textarea, #perfil-titulo, .product, #categoria, #product-detail, .comment-container, .card, #estrellas-container{
+  background-color: var(--color-elements) !important;
+  color: var(--text) !important;
+  transition: background-color, color 0.8s !important;
+  border: var(--color-border) solid 1px !important;
+}
+
+p, h2{
+  color: var(--text) !important;
+  transition: background-color, color 0.8s !important;
+}
+
 img {
     filter: var(--filter);
     transition: filter 0.8s;
