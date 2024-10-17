@@ -76,6 +76,18 @@
     .btn-primary:hover {
       background-color:#00a2bf;
     }
+
+    #menu{
+      position: fixed;
+      display: block;
+    }
+
+    .dropdown-item {
+      margin: 0;
+      padding: 0;
+      padding-left: 10px;
+    }
+    
   </style>
 </head>
 <body>
@@ -89,8 +101,14 @@
           <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
           <li class="nav-item"><a class="nav-link" href="categories.html">Categorías</a></li>
           <li class="nav-item"><a class="nav-link" href="sell.html">Vender</a></li>
-          <li class="nav-item"><a class="nav-link" href="my-profile.html"><span id="displayUsername"></span></a></li>
-          <li class="nav-item"><a id="cerrar" class="nav-link" href="#">Cerrar Sesión</a></li>
+          <li class="nav-item"><a class="nav-link" class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><span id="displayUsername"></span></a>
+            <ul class="dropdown-menu" id="menu">
+              <li><a class="dropdown-item" href="#">Mi carrito</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" id="cerrar" href="#">Cerrar sesión</a></li>
+            </ul>
         </ul>
       </div>
     </div>
