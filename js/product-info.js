@@ -9,9 +9,13 @@ document.addEventListener("DOMContentLoaded", () => {
   let commentsContainer = document.getElementById("comments");
   let btnEnviar = document.getElementById("btnEnviar");
 
-    if (localStorage.getItem("usuario") && localStorage.getItem("contraseña")) {
-        document.getElementById("user").innerHTML = "Cliente: " + ObjUsuario.email;
-    }
+  // Validar que el localStorage esté dentro de nuestro navegador (saber si inició sesión)
+  if (!ObjUsuario) { // Cambié aquí para verificar directamente el objeto
+    location.href = "login.html";
+  } else {
+    // Asegúrate de usar una propiedad específica
+    document.getElementById("user").innerHTML =  ObjUsuario.email; // Accede a la propiedad correcta
+  }
 
   document.getElementById("cerrar").addEventListener("click", function () {
     localStorage.removeItem("usuario");

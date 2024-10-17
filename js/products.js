@@ -5,15 +5,25 @@ document.addEventListener("DOMContentLoaded", () => {
   const categoryId = localStorage.getItem("categoryId") || "101";
   let ObjUsuario = JSON.parse(localStorage.getItem("usuario"));
 
-    if (localStorage.getItem("usuario") && localStorage.getItem("contraseña")) {
-        document.getElementById("user").innerHTML = "Cliente: " + ObjUsuario.email;
-    }
-    // borrar localStorage(Cerrar Sesión)
-    document.getElementById("cerrar").addEventListener("click", function () {
-        localStorage.removeItem("usuario");
-        localStorage.removeItem("contraseña");
-    });
-
+    // Obtén el tema guardado en localStorage
+  let savedTheme = localStorage.getItem("theme") || "light";
+  // Aplica el tema al documento
+  document.documentElement.setAttribute("data-theme", savedTheme);
+  console.log("Theme aplicado en esta página:", savedTheme);
+  // Validar que el localStorage esté dentro de nuestro navegador (saber si inició sesión)
+  if (!ObjUsuario) {
+    // Cambié aquí para verificar directamente el objeto
+    location.href = "login.html";
+  } else {
+    // Asegúrate de usar una propiedad específica
+    document.getElementById("user").innerHTML = ObjUsuario.email; // Accede a la propiedad correcta
+  }
+  // borrar localStorage(Cerrar Sesión)
+  document.getElementById("cerrar").addEventListener("click", function () {
+    localStorage.removeItem("usuario");
+    localStorage.removeItem("contraseña");
+  });
+  
   let mayor$ = document.getElementById("mayor$");
   let menor$ = document.getElementById("menor$");
   let relevancia = document.getElementById("relevancia");
