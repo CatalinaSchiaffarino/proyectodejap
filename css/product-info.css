@@ -125,3 +125,7 @@ i, span {
     margin: auto;
     border-radius: 5px;
 }
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(100%); /* Esto invierte el color blanco predeterminado a negro */
+}

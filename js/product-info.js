@@ -5,10 +5,6 @@ document.addEventListener("DOMContentLoaded", () => {
   let spinner = document.getElementById("spinner-wrapper");
   let ProductUrl = `https://japceibal.github.io/emercado-api/products/${productID}.json`;
   let commentsUrl = `https://japceibal.github.io/emercado-api/products_comments/${productID}.json`;
-  let myCarouselItemActive = document.getElementById("item active");
-  let myCarouselItem1 = document.getElementById("item 1");
-  let myCarouselItem2 = document.getElementById("item 2");
-  let myCarouselItem3 = document.getElementById("item 3");
   let ObjUsuario = JSON.parse(localStorage.getItem("usuario"));
   let commentsContainer = document.getElementById("comments");
   let btnEnviar = document.getElementById("btnEnviar");
@@ -29,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
   fetch(ProductUrl)
     .then((response) => response.json())
     .then((data) => {
+      displayCarouselImages(data.images);
       showProduct(data);
       fetchRelatedProducts(data.relatedProducts);
       spinner.style.display = "none";
@@ -39,6 +36,42 @@ document.addEventListener("DOMContentLoaded", () => {
         '<div class="alert alert-danger">Error al cargar el producto.</div>';
       spinner.style.display = "none";
     });
+  // JS para el carrusell
+  function displayCarouselImages(images) {
+    const carouselInner = document.getElementById('carouselInner');
+    const carouselIndicators = document.getElementById('carouselIndicators');
+    
+    carouselInner.innerHTML = '';
+    carouselIndicators.innerHTML = '';
+    
+    images.forEach((imgSrc, index) => {
+        const carouselItem = document.createElement('div');
+        carouselItem.classList.add('carousel-item');
+        
+        if (index === 0) {
+            carouselItem.classList.add('active'); // Marca el primer elemento como activo
+        }
+        
+        const img = document.createElement('img');
+        img.src = imgSrc;
+        img.classList.add('d-block', 'w-100'); 
+        img.alt = `Imagen ${index + 1}`;
+        
+        carouselItem.appendChild(img);
+        carouselInner.appendChild(carouselItem);
+        
+        // Indicadores
+        const indicator = document.createElement('li');
+        indicator.setAttribute('data-bs-target', '#myCarousel');
+        indicator.setAttribute('data-bs-slide-to', index);
+        if (index === 0) {
+            indicator.classList.add('active');
+        }
+        carouselIndicators.appendChild(indicator);
+    });
+  }
+
+  
 
   function showProduct(data) {
     if (!productID) {
@@ -47,11 +80,6 @@ document.addEventListener("DOMContentLoaded", () => {
       spinner.style.display = "none";
       return;
     }
-
-    let firstImage = data.images[0];
-    let secondImage = data.images[1];
-    let thirdImage = data.images[2];
-    let fourthImage = data.images[3];
 
     productDetailContainer.innerHTML = `
             <h2 id="info-titulo">${data.name}</h2>
@@ -65,10 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <p class="sold">Cantidad Vendidos: ${data.soldCount}</p>
         `;
 
-    myCarouselItemActive.innerHTML = `<img src="${firstImage}" alt="${data.name}">`;
-    myCarouselItem1.innerHTML = `<img src="${secondImage}" alt="${data.name}">`;
-    myCarouselItem2.innerHTML = `<img src="${thirdImage}" alt="${data.name}">`;
-    myCarouselItem3.innerHTML = `<img src="${fourthImage}" alt="${data.name}">`;
+
   }
   function fetchRelatedProducts(relatedProducts) {
     relatedProductsContainer.innerHTML = "";
