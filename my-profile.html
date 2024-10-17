@@ -7,7 +7,79 @@
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,700" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
-  <link href="css/my-profile.css" rel="stylesheet">
+  <style>
+    h2 {
+      color: #2c2c2c;
+      background-color: #ececec;
+      text-align: center;
+      padding: 10px;
+    }
+
+    .form-label {
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 800px;
+    }
+
+    .profile-container {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+
+    .profile-pic-container {
+      flex: 1;
+      margin-right: 20px;
+      text-align: center;
+    }
+
+    .profile-pic-container img {
+      border-radius: 50%;
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      margin-bottom: 10px;
+    }
+
+    .form-container {
+      flex: 2;
+    }
+
+    /* Modo noche */
+    body.night-mode {
+      background-color: #2c2c2c;
+      color: white;
+    }
+
+    body.night-mode input,
+    body.night-mode label {
+      color: #ffffff;
+    }
+
+    body.night-mode .form-control {
+      background-color: white;
+      color: #333;
+      border-color: #666;
+    }
+
+    body.night-mode .form-label {
+      color: #ffffff;
+    }
+
+    .btn-primary {
+      background-color:#00a2bf;
+      border-color:#00a2bf;
+    }
+
+    .btn-primary:hover {
+      background-color:#00a2bf;
+    }
+
+    
+    
+  </style>
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark  p-1">
@@ -20,8 +92,15 @@
           <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
           <li class="nav-item"><a class="nav-link" href="categories.html">Categorías</a></li>
           <li class="nav-item"><a class="nav-link" href="sell.html">Vender</a></li>
-          <li class="nav-item"><a class="nav-link" href="my-profile.html"><span id="displayUsername"></span></a></li>
-          <li class="nav-item"><a id="cerrar" class="nav-link" href="#">Cerrar Sesión</a></li>
+          <li class="nav-item"><a class="nav-link" class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><span id="displayUsername"></span></a>
+            <ul class="dropdown-menu" id="menu">
+              <li><a class="dropdown-item" href="#">Mi carrito</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" id="cerrar" href="#">Cerrar sesión</a></li>
+            </ul>
+          </li>
         </ul>
       </div>
     </div>
@@ -65,7 +144,7 @@
           </div>
           <div class="form-check form-switch mb-3">
             <div class="form-check form-switch mb-3">
-              <button id="switch__btn"/>
+              <button id="switch__btn"></button>
             </div>  
             <label class="form-check-label" for="modoNoche">Modo Noche</label>
           </div>

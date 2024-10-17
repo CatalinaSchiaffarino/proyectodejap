@@ -197,3 +197,15 @@ a.custom-card:hover {
   color: orange;
 }
 
+#menu{
+  position: fixed;
+  display: block;
+
+}
+
+.dropdown-item {
+  margin: 0;
+  padding: 0;
+  padding-left: 10px;
+}
+
