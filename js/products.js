@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let ObjUsuario = JSON.parse(localStorage.getItem("usuario"));
 
     if (localStorage.getItem("usuario") && localStorage.getItem("contraseña")) {
-        document.getElementById("user").innerHTML = "Cliente: " + ObjUsuario;
+        document.getElementById("user").innerHTML = "Cliente: " + ObjUsuario.email;
     }
     // borrar localStorage(Cerrar Sesión)
     document.getElementById("cerrar").addEventListener("click", function () {

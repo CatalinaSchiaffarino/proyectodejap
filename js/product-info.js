@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let btnEnviar = document.getElementById("btnEnviar");
 
     if (localStorage.getItem("usuario") && localStorage.getItem("contraseña")) {
-        document.getElementById("user").innerHTML = "Cliente: " + ObjUsuario;
+        document.getElementById("user").innerHTML = "Cliente: " + ObjUsuario.email;
     }
 
     document.getElementById("cerrar").addEventListener("click", function () {
