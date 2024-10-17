@@ -19,7 +19,7 @@ console.log("Theme aplicado en esta página:", savedTheme);
       location.href = "login.html";
   } else {
       // Asegúrate de usar una propiedad específica
-      document.getElementById("user").innerHTML =  ObjUsuario.email; // Accede a la propiedad correcta
+      document.getElementById("user").innerHTML =  "Cliente: " + ObjUsuario.email; // Accede a la propiedad correcta
   }
 
 
@@ -86,7 +86,7 @@ function showCategoriesList() {
         (maxCount != undefined && parseInt(category.productCount) <= maxCount))
     ) {
       htmlContentToAppend += `
-            <div onclick="setCatID(${category.id})" class="list-group-item list-group-item-action cursor-active">
+            <div onclick="setCatID(${category.id})" class="list-group-item list-group-item-action cursor-active" id="categoria">
                 <div class="row">
                     <div class="col-3">
                         <img src="${category.imgSrc}" alt="${category.description}" class="img-thumbnail">
