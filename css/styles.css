@@ -208,3 +208,11 @@ a.custom-card:hover {
   padding-left: 10px;
 }
 
+#menu {
+  position: absolute;
+  top: 100%;
+  left: 90%; /* Centra el menú horizontalmente según el enlace */
+  transform: translateX(-50%); /* Ajusta para que quede exactamente debajo */
+  z-index: 1000;
+}
+
