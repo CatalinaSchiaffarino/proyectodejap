@@ -251,7 +251,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Crear el contenido del comentario
         let commentHtml = `
             <p class="card-title fw-bold"> ${comment.user}</p>
-            <p class="card-subtitle mb-2 text-muted"> ${formatearFechaHora(comment.dateTime)}</p> <!-- Llamada a la función aquí -->
+            <p class="card-subtitle mb-2 text-muted"> ${formatearFechaHora(comment.dateTime)}</p> 
             <p>${comment.description}</p>
         `;
 
