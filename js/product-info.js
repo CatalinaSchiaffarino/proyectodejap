@@ -248,11 +248,13 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       // Crear el contenido del comentario
-      let commentHtml = `
-                    <p id ="user" class="card-title fw-bold"> ${comment.user}</p>
-                    <p id ="dateTime" class="card-subtitle mb-2 text-muted"> ${comment.dateTime}</p>
-                    <p id ="description" > ${comment.description}</p>
-                `;
+        // Crear el contenido del comentario
+        let commentHtml = `
+            <p class="card-title fw-bold"> ${comment.user}</p>
+            <p class="card-subtitle mb-2 text-muted"> ${formatearFechaHora(comment.dateTime)}</p> <!-- Llamada a la función aquí -->
+            <p>${comment.description}</p>
+        `;
+
 
       // Añadir las estrellas y el contenido del comentario al contenedor
       commentContainer.innerHTML = commentHtml;
@@ -262,4 +264,16 @@ document.addEventListener("DOMContentLoaded", () => {
       commentsContainer.appendChild(commentContainer);
     });
   }
+
+  function formatearFechaHora(fecha) {
+    return new Date(fecha).toLocaleString('es-ES', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+    });
+}
 });
