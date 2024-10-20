@@ -97,7 +97,7 @@ body, h1, select{
     transition: background-color, color 0.8s !important;
 }
 
-button, input, textarea, #perfil-titulo, .product, #categoria, #product-detail, .comment-container, .card, #estrellas-container,p{
+button, input, textarea, #perfil-titulo, .product, #categoria, #product-detail, .comment-container, .card, #estrellas-container{
   background-color: var(--color-elements) !important;
   color: var(--text) !important;
   transition: background-color, color 0.8s !important;
