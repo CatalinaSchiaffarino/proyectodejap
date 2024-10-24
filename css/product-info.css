@@ -8,19 +8,19 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    position: relative; /* Permitir el posicionamiento absoluto de hijos */
+    position: relative; 
 }
 
 #btnComprar {
     position: absolute;
-    bottom: 20px; /* Distancia desde el fondo */
-    right: 20px; /* Distancia desde la derecha */
-    background-color: #157f93 !important; /* Color de fondo azul */
-    color: white !important; /* Color de texto blanco */
-    border: 2px solid white; /* Borde blanco */
-    border-radius: 8px; /* Bordes redondeados */
-    padding: 10px 20px; /* Espaciado interno */
-    font-size: 18px; /* Tamaño de fuente */
+    bottom: 20px; 
+    right: 20px;
+    background-color: #157f93 !important; 
+    color: white !important; 
+    border: 2px solid white; 
+    border-radius: 8px; 
+    padding: 10px 20px; 
+    font-size: 18px; 
 }
 
 #btnComprar:hover {
@@ -144,6 +144,6 @@ i, span {
 }
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
-  filter: invert(100%); /* Esto invierte el color blanco predeterminado a negro */
+  filter: invert(100%);
 }
 
