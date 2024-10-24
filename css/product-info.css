@@ -8,6 +8,23 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+    position: relative; /* Permitir el posicionamiento absoluto de hijos */
+}
+
+#btnComprar {
+    position: absolute;
+    bottom: 20px; /* Distancia desde el fondo */
+    right: 20px; /* Distancia desde la derecha */
+    background-color: #157f93 !important; /* Color de fondo azul */
+    color: white !important; /* Color de texto blanco */
+    border: 2px solid white; /* Borde blanco */
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 10px 20px; /* Espaciado interno */
+    font-size: 18px; /* Tamaño de fuente */
+}
+
+#btnComprar:hover {
+    background-color: rgb(2, 2, 53) !important;
 }
 
 #myCarousel {
@@ -129,3 +146,4 @@ i, span {
 .carousel-control-next-icon {
   filter: invert(100%); /* Esto invierte el color blanco predeterminado a negro */
 }
+
