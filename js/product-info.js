@@ -252,6 +252,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       localStorage.setItem("cart", JSON.stringify(cart));
-      location.href = "cart.html"; // Redirigir al carrito
+      location.href = "cart.html"; 
   }
 });
