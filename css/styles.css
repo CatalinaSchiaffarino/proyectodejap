@@ -212,3 +212,82 @@ a.custom-card:hover {
   z-index: 1000;
 }
 
+/* carrito de compras */
+
+.background-color-gray {
+  background-color: rgb(206, 206, 206);
+}
+
+/* Estilos para el contenedor principal del carrito */
+.cart-container {
+  border: 1px solid #ccc; /* Borde gris */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  padding: 20px; /* Espaciado interno */
+  border-radius: 0; /* Sin bordes redondeados */
+  background-color: #fff; /* Fondo blanco */
+}
+
+/* Estilo para los botones de cantidad */
+.quantity-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  width: fit-content;
+  padding: 0 !important; 
+  overflow: hidden; /* Asegura que el borde sea continuo */
+  width: 60px; 
+  border-radius: 0 !important; 
+}
+
+.quantity-btn {
+  background-color: #e0e0e0 !important;
+  border: none;
+  font-size: 10px;
+  width: 20px !important; 
+  height: 20px !important;
+  cursor: pointer;
+  margin: 0 !important; 
+}
+
+.quantity-input {
+  font-size: 10px;
+  text-align: center;
+  width: 20px !important;
+  border: none;
+  background: none;
+  padding: 0; 
+}
+
+.icon-gray {
+  color: gray;
+ }
+
+ /* Botones de compra y seguir comprando */
+ .actions-container {
+  margin-top: 20px;
+  padding: 0 35px; 
+  font-size: large;
+}
+
+ .actions-container a {
+  text-decoration: none; 
+  color: black; 
+}
+
+.actions-container button {
+  margin-left: auto; /* Empujar el botón a la derecha */
+  font-size: large;
+}
+
+.btn-black {
+  background-color: black !important; 
+  border-radius: 0; 
+  color: white !important;
+  padding: 8px 35px ;
+  ;
+}
+
+.btn-black:hover {
+  background-color: #333232 !important;
+}
+

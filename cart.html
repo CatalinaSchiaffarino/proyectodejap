@@ -7,12 +7,13 @@
   <title>eMercado - Todo lo que busques está aquí</title>
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/font-awesome.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
+  <link href="css/my-profile.css" rel="stylesheet">
+
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark p-1">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
     <div class="container">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -21,7 +22,7 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav w-100 justify-content-between">
           <li class="nav-item">
-            <a class="nav-link" href="index.html">Inicio</a>
+            <a class="nav-link active" href="index.html">Inicio</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="categories.html">Categorías</a>
@@ -29,16 +30,36 @@
           <li class="nav-item">
             <a class="nav-link" href="sell.html">Vender</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item"><a id="user" class="nav-link dropdown-toggle" href="#" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false"></a>
+            <ul class="dropdown-menu" id="menu">
+              <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" id="cerrar" href="#">Cerrar sesión</a></li>
+            </ul>
           </li>
         </ul>
       </div>
     </div>
   </nav>
   <main>
-    <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
+
+
+    <div class="container my-5 d-flex justify-content-center">
+      <!-- Contenedor Principal del Carrito -->
+      <div class="card w-75">
+        <div class="card-header background-color-gray">
+          <h5 class="mb-0 text-center text-dark fw-bold">Detalle del pedido</h5>
+        </div>
+        <div class="card-body cart-container product-container" id="cart-body">
+         <!--Información de la compra que se agrega mediante js-->
+        </div>
       </div>
     </div>
   </main>
@@ -64,3 +85,4 @@
 </body>
 
 </html>
+
