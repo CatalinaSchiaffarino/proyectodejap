@@ -248,7 +248,8 @@ document.addEventListener("DOMContentLoaded", () => {
           price: product.cost,
           description: product.description,
           category: product.category,
-          image: product.images[0]
+          image: product.images[0],
+          quantity: 1
       });
 
       localStorage.setItem("cart", JSON.stringify(cart));
