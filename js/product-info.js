@@ -255,4 +255,10 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem("cart", JSON.stringify(cart));
       location.href = "cart.html"; 
   }
+
+
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let badge =  document.getElementById("cant-cart");
+    badge.innerHTML = `${cart.length}`;
 });

@@ -58,6 +58,9 @@ document.addEventListener("DOMContentLoaded", function () {
       cartContainer.appendChild(productCard);
     });
 
+  let badge =  document.getElementById("cant-cart");
+  badge.innerHTML = `${cart.length}`;
+
     // Crear el contenedor de importe total dentro del contenedor de productos
     let totalContainer = document.createElement("div");
     totalContainer.classList.add("total-container");
@@ -92,7 +95,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Agregar botones al contenedor de acciones
     actionsContainer.innerHTML = `
-      <a href="#" class=" me-3 mb-3">← Seguir comprando</a>
+      <a href="javascript: history.go(-1)" class=" me-3 mb-3">← Seguir comprando</a>
       <button class="btn btn-black ms-3 mb-3">Realizar la compra</button>
     `;
 
@@ -136,4 +139,19 @@ document.addEventListener("DOMContentLoaded", function () {
       location.reload(); // recargar para actualizar 
     });
   });
+
+
+  // Borrar localStorage (Cerrar Sesión)
+  document.getElementById("cerrar").addEventListener("click", function () {
+    localStorage.removeItem("usuario");
+    localStorage.removeItem("contraseña");
+  });
+  let ObjUsuario = JSON.parse(localStorage.getItem("usuario"));
+    if (!ObjUsuario) { // Cambié aquí para verificar directamente el objeto
+        location.href = "login.html";
+    } else {
+        // Asegúrate de usar una propiedad específica
+        document.getElementById("user").innerHTML = "Cliente: " + ObjUsuario.email; // Accede a la propiedad correcta
+    }
+
 });
