@@ -28,4 +28,9 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.removeItem("usuario");
         localStorage.removeItem("contraseña");
     });
+
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let badge =  document.getElementById("cant-cart");
+    badge.innerHTML = `${cart.length}`;
 });

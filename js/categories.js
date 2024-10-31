@@ -175,4 +175,10 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
       showCategoriesList();
     });
+
+
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let badge =  document.getElementById("cant-cart");
+    badge.innerHTML = `${cart.length}`;
 });

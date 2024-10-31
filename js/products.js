@@ -215,4 +215,10 @@ document.addEventListener("DOMContentLoaded", () => {
         '<div class="alert alert-danger">Error al cargar los productos.</div>';
       spinner.style.display = "none";
     });
+
+
+    
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let badge =  document.getElementById("cant-cart");
+    badge.innerHTML = `${cart.length}`;
 });

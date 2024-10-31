@@ -1,11 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
-    let usuario = JSON.parse(localStorage.getItem("usuario"));
-    if (!usuario) {
+    let ObjUsuario = JSON.parse(localStorage.getItem("usuario"));
+    if (!ObjUsuario) { // Cambié aquí para verificar directamente el objeto
         location.href = "login.html";
     } else {
-        document.getElementById("displayUsername").innerText = "Cliente: " + usuario.email;
-        loadUserProfile(usuario.email);
-    }
+        // Asegúrate de usar una propiedad específica
+        document.getElementById("user").innerHTML = "Cliente: " + ObjUsuario.email; // Accede a la propiedad correcta
+    };
 
     function loadUserProfile(email) {
         const userProfile = JSON.parse(localStorage.getItem("userProfile")) || {};
@@ -106,4 +106,9 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.removeItem("userProfile");
         location.href = "login.html";
     });
+
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let badge =  document.getElementById("cant-cart");
+    badge.innerHTML = `${cart.length}`;
 });
