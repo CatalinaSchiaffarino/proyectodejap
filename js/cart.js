@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Crear el contenedor para los botones
     let actionsContainer = document.createElement("div");
     actionsContainer.classList.add(
-      "d-flex",
+      
       "justify-content-between",
       "mt-4",
       "actions-container"
@@ -95,12 +95,115 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Agregar botones al contenedor de acciones
     actionsContainer.innerHTML = `
+    <div class="d-flex justify-content-between align-items-center me-3 mb-3" style="width: 100%;">
       <a href="javascript: history.go(-1)" class=" me-3 mb-3">← Seguir comprando</a>
-      <button class="btn btn-black ms-3 mb-3">Realizar la compra</button>
+      <button class="btn btn-black ms-3 mb-3" id="realizarCompra">Realizar la compra</button>
+    </div>
     `;
 
     // Agregar el contenedor de acciones al contenedor principal del carrito
     cartContainer.appendChild(actionsContainer);
+
+    let realizarCompra = document.getElementById("realizarCompra");
+
+    realizarCompra.addEventListener("click", () => {
+      actionsContainer.innerHTML = `
+      <div class="d-flex justify-content-between align-items-center me-3 mb-3" style="width: 100%;">
+
+          <div class=" me-3 mb-3">
+            <h5>Tipo de envio:</h5>
+            <input type="radio">Premium 2 a 5 dias (15%)</input><br>
+            <input type="radio">Premium 5 a 8 dias (7%)</input><br>
+            <input type="radio">Premium 12 a 15 dias (5%)</input>
+          </div>
+          
+          <div class=" me-3 mb-3">
+            <h5>Forma de pago:</h5>
+            <input type="radio">Tarjeta de credito</input><br>
+            <input type="radio">Transferencia bancaria</input><br>
+            <input type="radio">Pago en efectivo</input>
+          </div>
+            
+      </div>
+      <hr class="my-5">
+      <button id="siguientePaso1" class="btn btn-black ms-3 mb-3">Siguiente paso</button>
+      `;
+
+      let siguientePaso1 = document.getElementById("siguientePaso1");
+
+      siguientePaso1.addEventListener("click", () => {
+        actionsContainer.innerHTML = `
+        <div class="justify-content-between align-items-center me-3 mb-3" style="width: 100%;">
+
+            <div class=" me-3 mb-3">
+              <h5 style="margin: 5px 0 20px 0; text-align: center;">Direccion de envio</h5>
+              
+              <label for="departamento" style="margin: 5px 0;">Departamento</label>
+              <input type="text" id="departamento" style="border: none; border-radius: 8px; background: rgb(180, 180, 180); margin: 5px 0;"></input><br>
+              
+              <label for="localidad" style="margin: 5px 0;">Localidad</label>
+              <input type="text" id="localidad" style="border: none; border-radius: 8px; background: rgb(180, 180, 180); margin: 5px 0;"></input><br>
+              
+              <label for="calle" style="margin: 5px 0;">Calle</label>
+              <input type="text" id="calle" style="border: none; border-radius: 8px; background: rgb(180, 180, 180); margin: 5px 0;"></input><br>
+
+              <label for="numero" style="margin: 5px 0;">Numero</label>
+              <input type="number" id="numero" style="border: none; border-radius: 8px; background: rgb(180, 180, 180); margin: 5px 0;"></input><br>
+
+              <label for="esquina" style="margin: 5px 0;">Esquina</label>
+              <input type="text" id="esquina" style="border: none; border-radius: 8px; background: rgb(180, 180, 180); margin: 5px 0;"></input><br>
+            </div>
+              
+        </div>
+        <hr class="my-5">
+        <button id="siguientePaso2" class="btn btn-black ms-3 mb-3">Siguiente paso</button>
+        `;
+
+        let siguientePaso2 = document.getElementById("siguientePaso2");
+
+      siguientePaso2.addEventListener("click", () => {
+        actionsContainer.innerHTML = `
+        <div class="justify-content-between align-items-center me-3 mb-3" style="width: 100%;">
+
+            <div class=" me-3 mb-3" style="text-align: center;">
+              <h5 style="margin: 5px 0 20px 0; text-align: center;">Costos</h5>
+              
+              <span style="margin: 10px 0;">Subtotal: </span>
+              <span class="me-3" style="margin: 10px 0;">$${cart
+                .reduce(
+                  (acc, product) =>
+                    acc +
+                      (parseFloat(product.price) || 0) *
+                        (parseInt(product.quantity) || 1),
+                  0
+                )
+                .toFixed(2)}
+              </span><br>
+
+              <span style="margin: 10px 0;">Costo de envio: </span>
+              <span style="margin: 10px 0;">*costo*</span><br>
+
+              <hr class="my-5">
+
+              <strong style="margin: 30px 0; font-size: 120%;">Total: </strong>
+              <strong style="margin: 30px 0; font-size: 120%;">*total*</strong>
+            </div>
+                
+        </div>
+
+        <hr class="my-5">
+        <button id="finalizarCompra" class="btn btn-black ms-3 mb-3">Finalizar compra</button>
+        `;
+
+        
+
+      });
+
+      });
+
+    });
+
+
   }
   // Event listeners para botones de cantidad
   document.querySelectorAll(".quantity-btn").forEach((button) => {
@@ -153,5 +256,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Asegúrate de usar una propiedad específica
         document.getElementById("user").innerHTML = "Cliente: " + ObjUsuario.email; // Accede a la propiedad correcta
     }
+
+
 
 });
