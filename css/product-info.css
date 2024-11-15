@@ -10,11 +10,16 @@
     text-align: center;
     position: relative; 
 }
+.button-container {
+    display: flex;
+    justify-content: center;
+    width: 100%; 
+    margin-top: 20px; 
+    gap: 4cm;
+}
+
 
 #btnComprar {
-    position: absolute;
-    bottom: 20px; 
-    right: 20px;
     background-color: #157f93 !important; 
     color: white !important; 
     border: 2px solid white; 
@@ -27,6 +32,18 @@
     background-color: rgb(2, 2, 53) !important;
 }
 
+#btnAgregarCarrito {
+    background-color: #157f93 !important; 
+    color: white !important; 
+    border: 2px solid white; 
+    border-radius: 8px; 
+    padding: 10px 20px; 
+    font-size: 18px; 
+}
+
+#btnAgregarCarrito:hover {
+    background-color: rgb(2, 2, 53) !important;
+}
 #myCarousel {
     max-width: 70%;
     margin-left: 15%;
@@ -146,4 +163,3 @@ i, span {
 .carousel-control-next-icon {
   filter: invert(100%);
 }
-
