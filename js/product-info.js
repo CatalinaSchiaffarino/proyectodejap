@@ -1,19 +1,18 @@
-document.addEventListener('DOMContentLoaded', () => {
-    let productID = JSON.parse(localStorage.getItem('selectedProduct'));
-    let productDetailContainer = document.getElementById('product-detail');
-    let relatedProductsContainer = document.getElementById('related-products');
-    let spinner = document.getElementById('spinner-wrapper');
+document.addEventListener("DOMContentLoaded", () => {
+    let productID = JSON.parse(localStorage.getItem("selectedProduct"));
+    let productDetailContainer = document.getElementById("product-detail");
+    let relatedProductsContainer = document.getElementById("related-products");
+    let spinner = document.getElementById("spinner-wrapper");
     let ProductUrl = `https://japceibal.github.io/emercado-api/products/${productID}.json`;
     let commentsUrl = `https://japceibal.github.io/emercado-api/products_comments/${productID}.json`;
-    let myCarouselItemActive = document.getElementById('item active');
-    let myCarouselItem1 = document.getElementById("item 1");
-    let myCarouselItem2 = document.getElementById("item 2");
-    let myCarouselItem3 = document.getElementById("item 3");
     let ObjUsuario = JSON.parse(localStorage.getItem("usuario"));
     let commentsContainer = document.getElementById("comments");
+    let btnEnviar = document.getElementById("btnEnviar");
 
-    if (localStorage.getItem("usuario") && localStorage.getItem("contraseña")) {
-        document.getElementById("user").innerHTML = "Cliente: " + ObjUsuario;
+    if (!ObjUsuario) {
+        location.href = "login.html";
+    } else {
+        document.getElementById("user").innerHTML = "Cliente: " + ObjUsuario.email;
     }
 
     document.getElementById("cerrar").addEventListener("click", function () {
@@ -22,50 +21,86 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     fetch(ProductUrl)
-        .then(response => response.json())
-        .then(data => {
+        .then((response) => response.json())
+        .then((data) => {
+            displayCarouselImages(data.images);
             showProduct(data);
             fetchRelatedProducts(data.relatedProducts);
-            spinner.style.display = 'none';
+            spinner.style.display = "none";
         })
-        .catch(error => {
-            console.error('There has been a problema:', error);
-            productDetailContainer.innerHTML = '<div class="alert alert-danger">Error al cargar el producto.</div>';
-            spinner.style.display = 'none';
+        .catch((error) => {
+            console.error("There has been a problema:", error);
+            productDetailContainer.innerHTML =
+                '<div class="alert alert-danger">Error al cargar el producto.</div>';
+            spinner.style.display = "none";
         });
+
+    function displayCarouselImages(images) {
+        const carouselInner = document.getElementById('carouselInner');
+        const carouselIndicators = document.getElementById('carouselIndicators');
+        carouselInner.innerHTML = '';
+        carouselIndicators.innerHTML = '';
+        images.forEach((imgSrc, index) => {
+            const carouselItem = document.createElement('div');
+            carouselItem.classList.add('carousel-item');
+            if (index === 0) {
+                carouselItem.classList.add('active');
+            }
+            const img = document.createElement('img');
+            img.src = imgSrc;
+            img.classList.add('d-block', 'w-100');
+            img.alt = `Imagen ${index + 1}`;
+            carouselItem.appendChild(img);
+            carouselInner.appendChild(carouselItem);
+            const indicator = document.createElement('li');
+            indicator.setAttribute('data-bs-target', '#myCarousel');
+            indicator.setAttribute('data-bs-slide-to', index);
+            if (index === 0) {
+                indicator.classList.add('active');
+            }
+            carouselIndicators.appendChild(indicator);
+        });
+    }
 
     function showProduct(data) {
         if (!productID) {
-            productDetailContainer.innerHTML = '<div class="alert alert-danger">No se encontraron detalles del producto.</div>';
-            spinner.style.display = 'none';
+            productDetailContainer.innerHTML =
+                '<div class="alert alert-danger">No se encontraron detalles del producto.</div>';
+            spinner.style.display = "none";
             return;
         }
-
-        let firstImage = data.images[0];
-        let secondImage = data.images[1];
-        let thirdImage = data.images[2];
-        let fourthImage = data.images[3];
-
         productDetailContainer.innerHTML = `
-            <h1>${data.name}</h1>
+            <h2 id="info-titulo">${data.name}</h2>
             <p class="description">${data.description}</p>
-            <p class="price">${(data.cost).toLocaleString('es-UY', {
-            style: 'currency',
-            currency: 'USD',
-            currencyDisplay: 'symbol'
-        })}</p>
-            <h1 class="category">Categoría: ${data.category}</h1>
+            <p class="price">${data.cost.toLocaleString("es-UY", {
+                style: "currency",
+                currency: "USD",
+                currencyDisplay: "symbol",
+            })}</p>
+            <h2 class="category">Categoría: ${data.category}</h2>
             <p class="sold">Cantidad Vendidos: ${data.soldCount}</p>
+            <div class="button-container">
+                <button class="btn btn-primary" id="btnAgregarCarrito">Agregar al carrito</button>
+                <button class="btn btn-success" id="btnComprar">
+                    <img src="img/carro.png" alt="Carro" style="width: 20px; height: 20px; margin-right: 5px; vertical-align: middle;">
+                    Comprar
+                </button>
+            </div>
         `;
-
-        myCarouselItemActive.innerHTML = `<img src="${firstImage}" alt="${data.name}">`;
-        myCarouselItem1.innerHTML = `<img src="${secondImage}" alt="${data.name}">`;
-        myCarouselItem2.innerHTML = `<img src="${thirdImage}" alt="${data.name}">`;
-        myCarouselItem3.innerHTML = `<img src="${fourthImage}" alt="${data.name}">`;
+        document.getElementById("btnComprar").addEventListener("click", () => {
+            addToCart(data);
+            location.href = "cart.html";
+        });
+        document.getElementById("btnAgregarCarrito").addEventListener("click", () => {
+            addToCart(data);
+            alert("Producto agregado al carrito");
+        });
     }
+    
+    
     function fetchRelatedProducts(relatedProducts) {
-        relatedProductsContainer.innerHTML = '';
-        relatedProducts.forEach(product => {
+        relatedProductsContainer.innerHTML = "";
+        relatedProducts.forEach((product) => {
             let relatedProductHTML = `
                 <div class="col-md-3">
                     <div class="card">
@@ -82,74 +117,109 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     window.loadProduct = function (id) {
-        localStorage.setItem('selectedProduct', JSON.stringify(id));
+        localStorage.setItem("selectedProduct", JSON.stringify(id));
         location.reload();
     };
 
+    let comentario;
+    function agregarComentario(calificacion) {
+        let fecha = new Date();
+        comentario = {
+            product: productID,
+            score: calificacion,
+            description: document.getElementById("comentario").value,
+            user: ObjUsuario,
+            dateTime:
+                fecha.getFullYear() +
+                "-" +
+                ("0" + fecha.getMonth()).slice(-2) +
+                "-" +
+                ("0" + fecha.getDay()).slice(-2) +
+                " " +
+                ("0" + fecha.getHours()).slice(-2) +
+                ":" +
+                ("0" + fecha.getMinutes()).slice(-2) +
+                ":" +
+                ("0" + fecha.getSeconds()).slice(-2),
+        };
+    }
+
+    let savedTheme = localStorage.getItem("theme") || "light";
+    document.documentElement.setAttribute("data-theme", savedTheme);
 
     fetch(commentsUrl)
-        .then(response => response.json())
-        .then(data => {
-            console.log(data)
+        .then((response) => response.json())
+        .then((data) => {
             showComments(data);
-            spinner.style.display = 'none';
+            spinner.style.display = "none";
+            let calificacion;
+            [1, 2, 3, 4, 5].forEach(i => {
+                document.getElementById(`star${i}`).addEventListener("click", () => {
+                    calificacion = i;
+                    for (let j = 1; j <= 5; j++) {
+                        document.getElementById(`star${j}`).className = j <= calificacion ? "fas fa-star" : "far fa-star";
+                    }
+                });
+            });
+            btnEnviar.addEventListener("click", () => {
+                agregarComentario(calificacion);
+                showComments([comentario]);
+                document.getElementById("comentario").value = "";
+            });
         })
-        .catch(error => {
-            console.error('There has been a problem:', error);
-            commentsContainer.innerHTML = '<div class="alert alert-danger">Error al cargar los comentarios.</div>';
-            spinner.style.display = 'none';
+        .catch((error) => {
+            console.error("There has been a problem:", error);
+            commentsContainer.innerHTML =
+                '<div class="alert alert-danger">Error al cargar los comentarios.</div>';
+            spinner.style.display = "none";
         });
 
     function showComments(data) {
-        commentsContainer.innerHTML = ""; // Limpiar el contenedor de comentarios
-
         if (!data.length) {
-            commentsContainer.innerHTML = '<div>No se encontraron comentarios.</div>';
-            spinner.style.display = 'none';
+            commentsContainer.innerHTML = "<div>No se encontraron comentarios.</div>";
+            spinner.style.display = "none";
             return;
         }
-
-        data.forEach(comment => {
-            // Crear un nuevo contenedor para cada comentario
+        data.forEach((comment) => {
             let commentContainer = document.createElement("div");
             commentContainer.className = "comment-container card mb-3 p-3";
-
-            // Crear las estrellas según la calificación
             let starContainer = document.createElement("div");
-            starContainer.className = "star-rating-container";
-
-            if (comment.score) {
-                let score = comment.score;
-                let stars = document.createElement("div");
-                stars.className = "star-rating";
-
-                for (let i = 1; i <= 5; i++) {
-                    let star = document.createElement("i");
-                    if (i <= score) {
-                        star.className = "fas fa-star"; // Estrella llena
-                    } else {
-                        star.className = "far fa-star"; // Estrella vacía
-                    }
-                    stars.appendChild(star);
-                }
-
-                starContainer.appendChild(stars); // Añadir las estrellas al contenedor
+            for (let i = 1; i <= 5; i++) {
+                let star = document.createElement("i");
+                star.className = i <= comment.score ? "fas fa-star" : "far fa-star";
+                starContainer.appendChild(star);
             }
-
-            // Crear el contenido del comentario
-            let commentHtml = `
-                    <p id ="user" class="card-title fw-bold"> ${comment.user}</p>
-                    <p id ="dateTime" class="card-subtitle mb-2 text-muted"> ${comment.dateTime}</p>
-                    <p id ="description" > ${comment.description}</p>
-                `;
-
-            // Añadir las estrellas y el contenido del comentario al contenedor
-            commentContainer.innerHTML = commentHtml;
-            commentContainer.appendChild(starContainer);
-
-            // Añadir el contenedor del comentario completo al contenedor principal de comentarios
+            commentContainer.innerHTML = `
+                <div><strong>${comment.user}</strong> (${comment.dateTime})</div>
+                <div>${starContainer.outerHTML}</div>
+                <div>${comment.description}</div>
+            `;
             commentsContainer.appendChild(commentContainer);
         });
     }
 
+    function addToCart(product) {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const existingProduct = cart.find(item => item.id === product.id);
+        if (existingProduct) {
+            existingProduct.quantity += 1; 
+        } else {
+            cart.push({
+                id: product.id,
+                name: product.name,
+                price: product.cost,
+                description: product.description,
+                category: product.category,
+                image: product.images[0],
+                quantity: 1
+            });
+        }
+        localStorage.setItem("cart", JSON.stringify(cart));
+        let badge = document.getElementById("cant-cart");
+        badge.innerHTML = `${cart.length}`;
+    }
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let badge = document.getElementById("cant-cart");
+    badge.innerHTML = `${cart.length}`;
 });
