@@ -1,0 +1,115 @@
+
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css");
+#perfil-titulo {
+    color: #2c2c2c;
+    background-color: #ececec;
+    text-align: center;
+    padding: 10px;
+  }
+
+  .form-label {
+    font-weight: bold;
+  }
+
+  #contenedor-perfil {
+    max-width: 1000px;
+  }
+
+  .profile-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .profile-pic-container {
+    flex: 1;
+    margin-right: 20px;
+    text-align: center;
+  }
+
+  .profile-pic-container img {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
+
+  .form-container {
+    flex: 2;
+  }
+
+  
+[data-theme="light"] {
+    --bgSwitch: #1569ca !important;
+    --boxShadowSwitch: inset 20px 20px 30px -5px rgba(255, 255, 255, 0.8) !important;
+    --content: "\f185";
+    --text: #121212  !important;
+    --contentColor: #c9a00d;
+    --translate: 0%;
+    --background: #e0e3f1 !important;
+    --color-border: rgb(255, 255, 255);
+    --color-elements: white;
+    --text: #121212 !important;
+    --filter: brightness() contrast() !important;
+}
+
+[data-theme="dark"] {
+    --background: #121212 !important;
+    --color-elements: rgb(43, 43, 43);
+    --color-border: rgb(27, 27, 27);
+    --color:#ffffff !important;
+    --text: #ffffffcc !important;
+    --bgSwitch: #000 !important;
+    --boxShadowSwitch: inset 20px 20px 30px -10px rgba(250, 250, 250, 0.5) !important;
+    --content: "\f186";
+    --contentColor: #fff;
+    --translate: 100%;
+    --filter: brightness(.8) contrast(1.2) !important;
+}
+/* Switch button */
+#switch__btn {
+    background-color: var(--bgSwitch) !important;
+    box-shadow: var(--boxShadowSwitch);
+    padding-right: 10px;
+    width: 60px;
+    height: 30px;
+    border: none;
+    border-radius: 50px;
+    display: flex;
+    transition: background-color, box-shadow 0.8s;
+}
+
+#switch__btn::before {
+    content: var(--content);
+    font-family: 'Font Awesome 6 Free';
+    font-size: 15px;
+    color: var(--contentColor);
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    transform: translateX(var(--translate));
+    transition: transform 0.8s;
+}
+body, h1, select{
+    background-color: var(--background) !important;
+    color: var(--text) !important;
+    transition: background-color, color 0.8s !important;
+}
+
+button, input, textarea, #perfil-titulo, .product, #categoria, #product-detail, .comment-container, .card, #estrellas-container{
+  background-color: var(--color-elements) !important;
+  color: var(--text) !important;
+  transition: background-color, color 0.8s !important;
+  border: var(--color-border) solid 1px !important;
+}
+
+p, h2{
+  color: var(--text) !important;
+  transition: background-color, color 0.8s !important;
+}
+
+img {
+    filter: var(--filter);
+    transition: filter 0.8s;
+}

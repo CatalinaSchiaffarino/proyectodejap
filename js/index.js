@@ -13,21 +13,24 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("catID", 103);
         window.location.href = "products.html";
     });
+
+    // Validar que el localStorage esté dentro de nuestro navegador (saber si inició sesión)
+    let ObjUsuario = JSON.parse(localStorage.getItem("usuario"));
+    if (!ObjUsuario) { // Cambié aquí para verificar directamente el objeto
+        location.href = "login.html";
+    } else {
+        // Asegúrate de usar una propiedad específica
+        document.getElementById("user").innerHTML = "Cliente: " + ObjUsuario.email; // Accede a la propiedad correcta
+    }
+
+    // Borrar localStorage (Cerrar Sesión)
+    document.getElementById("cerrar").addEventListener("click", function () {
+        localStorage.removeItem("usuario");
+        localStorage.removeItem("contraseña");
+    });
+
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let badge =  document.getElementById("cant-cart");
+    badge.innerHTML = `${cart.length}`;
 });
-
-
-//validar que el localStorage este dentro de nuestro navegador(Saber si inició sesión)
-let ObjUsuario = JSON.parse(localStorage.getItem("usuario"));
-if (!localStorage.getItem("usuario") && !localStorage.getItem("contraseña")) { //si no lo puedo hacer hago un location.href
-    location.href = "login.html";
-}
-if (localStorage.getItem("usuario") && localStorage.getItem("contraseña")) {
-    document.getElementById("user").innerHTML = "Cliente: " + ObjUsuario;
-}
-// borrar localStorage(Cerrar Sesión)
-document.getElementById("cerrar").addEventListener("click", function () {
-    localStorage.removeItem("usuario");
-    localStorage.removeItem("contraseña");
-});
-
-

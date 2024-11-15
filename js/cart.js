@@ -87,7 +87,11 @@ document.addEventListener("DOMContentLoaded", function () {
     // Crear el contenedor para los botones
     let actionsContainer = document.createElement("div");
     actionsContainer.classList.add(
+<<<<<<< HEAD
       
+=======
+      "d-flex",
+>>>>>>> main
       "justify-content-between",
       "mt-4",
       "actions-container"
@@ -95,14 +99,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Agregar botones al contenedor de acciones
     actionsContainer.innerHTML = `
+<<<<<<< HEAD
     <div class="d-flex justify-content-between align-items-center me-3 mb-3" style="width: 100%;">
       <a href="javascript: history.go(-1)" class=" me-3 mb-3">← Seguir comprando</a>
       <button class="btn btn-black ms-3 mb-3" id="realizarCompra">Realizar la compra</button>
     </div>
+=======
+      <a href="javascript: history.go(-1)" class=" me-3 mb-3">← Seguir comprando</a>
+      <button class="btn btn-black ms-3 mb-3">Realizar la compra</button>
+>>>>>>> main
     `;
 
     // Agregar el contenedor de acciones al contenedor principal del carrito
     cartContainer.appendChild(actionsContainer);
+<<<<<<< HEAD
 
     let realizarCompra = document.getElementById("realizarCompra");
 
@@ -204,6 +214,8 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
+=======
+>>>>>>> main
   }
   // Event listeners para botones de cantidad
   document.querySelectorAll(".quantity-btn").forEach((button) => {
@@ -257,6 +269,10 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("user").innerHTML = "Cliente: " + ObjUsuario.email; // Accede a la propiedad correcta
     }
 
+<<<<<<< HEAD
 
 
 });
+=======
+});
+>>>>>>> main
