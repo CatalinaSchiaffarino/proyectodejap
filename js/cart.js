@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 </div>
                 <div class="d-flex align-items-center">
                   <span class="me-3">$${price.toFixed(2)}</span>
-                  <a href="#" class="text-danger delete-btn" data-index="${index}"><i class="fa fa-trash icon-gray"></i></a>
+                  <button class="delete-btn" data-index="${index}">Eliminar</button>
                 </div>
               </div>
               <div class="d-flex justify-content-between mt-2">
@@ -111,10 +111,12 @@ document.addEventListener("DOMContentLoaded", function () {
       <div class="d-flex justify-content-between align-items-center me-3 mb-3" style="width: 100%;">
 
           <div class=" me-3 mb-3">
-            <h5>Tipo de envio:</h5>
-            <input type="radio">Premium 2 a 5 dias (15%)</input><br>
-            <input type="radio">Premium 5 a 8 dias (7%)</input><br>
-            <input type="radio">Premium 12 a 15 dias (5%)</input>
+          <fieldset>
+        <legend>Tipo de envio:</legend>
+        <label for="15"><input id="15" type="radio" name="tipo-envio"  checked value="15" />Premium 2 a 5 dias (15%)</label><br>
+        <label for="7"><input id="7" type="radio" name="tipo-envio" value="7"  /> Express 5 a 8 dias (7%)</label><br>
+        <label for="5"><input id="5" type="radio" name="tipo-envio" value="5" /> Standar 12 a 15 dias (5%)</label>
+      </fieldset>
           </div>
           
           <div class=" me-3 mb-3">
@@ -128,6 +130,16 @@ document.addEventListener("DOMContentLoaded", function () {
       <hr class="my-5">
       <button id="siguientePaso1" class="btn btn-black ms-3 mb-3">Siguiente paso</button>
       `;
+
+      let radiobot = document.getElementsByName("tipo-envio");
+      radiobot.forEach((radio) => {
+        radio.addEventListener("change", () => {
+          let envioElegido = document.querySelector(
+            'input[name="tipo-envio"]:checked'
+          ).value;
+          localStorage.setItem("tipoEnvioElegido", envioElegido);
+        });
+      });
 
       let siguientePaso1 = document.getElementById("siguientePaso1");
 
@@ -162,6 +174,29 @@ document.addEventListener("DOMContentLoaded", function () {
         let siguientePaso2 = document.getElementById("siguientePaso2");
 
       siguientePaso2.addEventListener("click", () => {
+
+        let subtotal = cart.reduce(
+          (acc, product) =>
+            acc +
+            (parseFloat(product.price) || 0) *
+              (parseInt(product.quantity) || 1),
+          0
+        );
+        // Recuperamos el tipo de envío desde localStorage
+        let tipoEnvio = localStorage.getItem("tipoEnvioElegido");
+        let costoEnvio = 0; // Inicializamos el costo de envío
+
+        // Verificamos qué valor de envío fue seleccionado y aplicamos el porcentaje correspondiente
+        if (tipoEnvio === "15") {
+          costoEnvio = subtotal * 0.15; // Premium 2 a 5 dias (15%)
+        } else if (tipoEnvio === "7") {
+          costoEnvio = subtotal * 0.07; // Estadar 5 a 8 dias (7%)
+        } else if (tipoEnvio === "5") {
+          costoEnvio = subtotal * 0.05; //Basico 12 a 15 días (5%)
+        }
+
+        let total = subtotal + costoEnvio; // Calcular el total
+
         actionsContainer.innerHTML = `
         <div class="justify-content-between align-items-center me-3 mb-3" style="width: 100%;">
 
@@ -169,24 +204,17 @@ document.addEventListener("DOMContentLoaded", function () {
               <h5 style="margin: 5px 0 20px 0; text-align: center;">Costos</h5>
               
               <span style="margin: 10px 0;">Subtotal: </span>
-              <span class="me-3" style="margin: 10px 0;">$${cart
-                .reduce(
-                  (acc, product) =>
-                    acc +
-                      (parseFloat(product.price) || 0) *
-                        (parseInt(product.quantity) || 1),
-                  0
-                )
-                .toFixed(2)}
+              <span class="me-3" style="margin: 10px 0;">$${subtotal.toFixed(2)}
+
               </span><br>
 
               <span style="margin: 10px 0;">Costo de envio: </span>
-              <span style="margin: 10px 0;">*costo*</span><br>
+              <span style="margin: 10px 0;">$${costoEnvio.toFixed(2)}</span><br>
 
               <hr class="my-5">
 
               <strong style="margin: 30px 0; font-size: 120%;">Total: </strong>
-              <strong style="margin: 30px 0; font-size: 120%;">*total*</strong>
+              <strong style="margin: 30px 0; font-size: 120%;">$${total.toFixed(2)}</strong>
             </div>
                 
         </div>
