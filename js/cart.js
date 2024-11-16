@@ -1,9 +1,23 @@
+let total;
+
+function precioEnvio(tipoEnvio, costoEnvio, subtotal) {
+  if (tipoEnvio === "15") {
+    costoEnvio = subtotal * 0.15; // Premium 2 a 5 días (15%)
+  } else if (tipoEnvio === "7") {
+    costoEnvio = subtotal * 0.07; // Estándar 5 a 8 días (7%)
+  } else if (tipoEnvio === "5") {
+    costoEnvio = subtotal * 0.05; // Básico 12 a 15 días (5%)
+  } else {
+    costoEnvio = 0; // Valor por defecto si no hay tipo de envío seleccionado
+  }
+  return costoEnvio;
+}
 document.addEventListener("DOMContentLoaded", function () {
   let cartContainer = document.getElementById("cart-body"); // Contenerdor del carrito
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  // fncion para actualizar el subtotal y el importe total
-  function updateTotals() {
+   // fncion para actualizar el subtotal y el importe total
+   function updateTotals() {
     let totalAmount = 0;
     cart.forEach((product) => {
       let price = parseFloat(product.price) || 0;
@@ -11,10 +25,49 @@ document.addEventListener("DOMContentLoaded", function () {
       totalAmount += price * quantity;
     });
 
-    document.querySelector(
-      ".total-container strong"
-    ).textContent = `$${totalAmount.toFixed(2)}`;
+    let tipoEnvio = localStorage.getItem("tipoEnvioElegido") || "15";
+    if (!tipoEnvio) {
+      tipoEnvio = "15"; // Valor por defecto
+      localStorage.setItem("tipoEnvioElegido", tipoEnvio);
+    }
+
+    document.getElementById("total-amount").textContent = `$${(
+      totalAmount 
+    ).toFixed(2)}`;
+
     localStorage.setItem("cart", JSON.stringify(cart));
+  }
+
+  function updateFinalTotal() {
+    // Recalcular subtotal
+    let subtotal = cart.reduce(
+      (acc, product) =>
+        acc +
+        (parseFloat(product.price) || 0) * (parseInt(product.quantity) || 1),
+      0
+    );
+
+    let tipoEnvio = localStorage.getItem("tipoEnvioElegido") || "15";
+
+    let costoEnvio = precioEnvio(tipoEnvio, 0, subtotal);
+
+    total = subtotal + costoEnvio;
+
+    if (document.getElementById("subtotal-amount")) {
+      document.getElementById(
+        "subtotal-amount"
+      ).textContent = `$${subtotal.toFixed(2)}`;
+    }
+    if (document.getElementById("shipping-cost")) {
+      document.getElementById(
+        "shipping-cost"
+      ).textContent = `$${costoEnvio.toFixed(2)}`;
+    }
+    if (document.getElementById("final-total")) {
+      document.getElementById("final-total").textContent = `$${total.toFixed(
+        2
+      )}`;
+    }
   }
 
   if (cart.length === 0) {
@@ -67,16 +120,8 @@ document.addEventListener("DOMContentLoaded", function () {
     totalContainer.innerHTML = `
       <hr class="my-4">
       <div class="d-flex justify-content-between align-items-center">
-        <h5 class="mb-0 ms-3">Importe Total:</h5>
-        <span class="me-3"><strong>$${cart
-        .reduce(
-          (acc, product) =>
-            acc +
-            (parseFloat(product.price) || 0) *
-            (parseInt(product.quantity) || 1),
-          0
-        )
-        .toFixed(2)}</strong></span>
+         <h5 class="mb-0 ms-3">Importe Total:</h5>
+        <span class="me-3"><strong><strong id="total-amount">$0.00</strong></span>
       </div>
       <hr class="my-5">
     `;
@@ -143,6 +188,24 @@ document.addEventListener("DOMContentLoaded", function () {
       <hr class="my-5">
       <button id="siguientePaso1" class="btn btn-black ms-3 mb-3">Siguiente paso</button>
       `;
+
+      let radiobot = document.getElementsByName("tipo-envio");
+      radiobot.forEach((radio) => {
+        radio.addEventListener("change", () => {
+          let envioElegido = document.querySelector(
+            'input[name="tipo-envio"]:checked'
+          ).value;
+          localStorage.setItem("tipoEnvioElegido", envioElegido);
+
+          updateTotals();
+          updateFinalTotal();
+        });
+      });
+
+      let envioElegidoInicial = document.querySelector(
+        'input[name="tipo-envio"]:checked'
+      ).value;
+      localStorage.setItem("tipoEnvioElegido", envioElegidoInicial);
 
       let siguientePaso1 = document.getElementById("siguientePaso1");
 
@@ -217,29 +280,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
           if (form.checkValidity()) {
 
-
-            let subtotal = cart.reduce(
-              (acc, product) =>
-                acc +
-                (parseFloat(product.price) || 0) *
-                (parseInt(product.quantity) || 1),
-              0
-            );
-            // Recuperamos el tipo de envío desde localStorage
-            let tipoEnvio = localStorage.getItem("tipoEnvioElegido");
-            let costoEnvio = 0; // Inicializamos el costo de envío
-
-            // Verificamos qué valor de envío fue seleccionado y aplicamos el porcentaje correspondiente
-            if (tipoEnvio === "15") {
-              costoEnvio = subtotal * 0.15; // Premium 2 a 5 dias (15%)
-            } else if (tipoEnvio === "7") {
-              costoEnvio = subtotal * 0.07; // Estadar 5 a 8 dias (7%)
-            } else if (tipoEnvio === "5") {
-              costoEnvio = subtotal * 0.05; //Basico 12 a 15 días (5%)
-            }
-
-            let total = subtotal + costoEnvio; // Calcular el total
-
             actionsContainer.innerHTML = `
             
         <div class="justify-content-between align-items-center me-3 mb-3" style="width: 100%;">
@@ -248,17 +288,16 @@ document.addEventListener("DOMContentLoaded", function () {
               <h5 style="margin: 5px 0 20px 0; text-align: center;">Costos</h5>
               
               <span style="margin: 10px 0;">Subtotal: </span>
-              <span class="me-3" style="margin: 10px 0;">$${subtotal.toFixed(2)}
+             <span id="subtotal-amount" class="me-3" style="margin: 10px 0;"></span><br>
 
-              </span><br>
 
               <span style="margin: 10px 0;">Costo de envio: </span>
-              <span style="margin: 10px 0;">$${costoEnvio.toFixed(2)}</span><br>
+              <span id="shipping-cost" style="margin: 10px 0;"></span><br>
 
               <hr class="my-5">
 
               <strong style="margin: 30px 0; font-size: 120%;">Total: </strong>
-              <strong style="margin: 30px 0; font-size: 120%;">$${total.toFixed(2)}</strong>
+              <strong id="final-total" style="margin: 30px 0; font-size: 120%;"></strong>
             </div>
                 
         </div>
@@ -266,6 +305,7 @@ document.addEventListener("DOMContentLoaded", function () {
         <hr class="my-5">
         <button id="finalizarCompra" class="btn btn-black ms-3 mb-3">Finalizar compra</button>
         `;
+        updateFinalTotal();
 
             let finishBuy = document.getElementById("finalizarCompra");
             finishBuy.addEventListener("click", function () {
@@ -279,7 +319,8 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 
     });
-
+    updateTotals();
+    updateFinalTotal();
 
     // Event listeners para botones de cantidad
     document.querySelectorAll(".quantity-btn").forEach((button) => {
@@ -303,7 +344,12 @@ document.addEventListener("DOMContentLoaded", function () {
           cart[index].price * cart[index].quantity
         ).toFixed(2);
         updateTotals();
+
+        if (document.getElementById("final-total")) {
+          updateFinalTotal();
+        }
       });
+      
     });
 
     // event listeners para botones de eliminar
