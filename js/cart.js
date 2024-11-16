@@ -170,18 +170,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
           <div class=" me-3 mb-3">
           <fieldset>
-        <legend>Tipo de envio:</legend>
-        <label for="15"><input id="15" type="radio" name="tipo-envio"  checked value="15" />Premium 2 a 5 dias (15%)</label><br>
-        <label for="7"><input id="7" type="radio" name="tipo-envio" value="7"  /> Express 5 a 8 dias (7%)</label><br>
-        <label for="5"><input id="5" type="radio" name="tipo-envio" value="5" /> Standar 12 a 15 dias (5%)</label>
+        <legend>Tipo de envío:</legend>
+        <label for="15"><input id="15" type="radio" name="tipo-envio"  checked value="15" />Premium 2 a 5 días (15%)</label><br>
+        <label for="7"><input id="7" type="radio" name="tipo-envio" value="7"  /> Express 5 a 8 días (7%)</label><br>
+        <label for="5"><input id="5" type="radio" name="tipo-envio" value="5" /> Standar 12 a 15 días (5%)</label>
       </fieldset>
           </div>
           
           <div class=" me-3 mb-3">
-            <h5>Forma de pago:</h5>
-            <input type="radio" name= "pago" value= "tarjeta" >Tarjeta de credito</input><br>
+          <fieldset>
+            <legend>Forma de pago:</legend>
+            <input type="radio" name= "pago" value= "tarjeta" >Tarjeta de crédito</input><br>
             <input type="radio" name= "pago" value= "transferencia" >Transferencia bancaria</input><br>
             <input type="radio" name= "pago" value= "efectivo" >Pago en efectivo</input>
+          </fieldset>
           </div>
             
       </div>
@@ -247,7 +249,7 @@ document.addEventListener("DOMContentLoaded", function () {
         <div class="justify-content-between align-items-center me-3 mb-3" style="width: 100%;">
 
             <div class=" me-3 mb-3">
-              <h5 style="margin: 5px 0 20px 0; text-align: center;">Direccion de envio</h5>
+              <h5 style="margin: 5px 0 20px 0; text-align: center;">Dirección de envio</h5>
               
               <label for="departamento" style="margin: 5px 0;">Departamento</label>
               <input type="text" id="departamento" style="border: none; border-radius: 8px; background: rgb(180, 180, 180); margin: 5px 0;" required></input><br>
@@ -258,7 +260,7 @@ document.addEventListener("DOMContentLoaded", function () {
               <label for="calle" style="margin: 5px 0;">Calle</label>
               <input type="text" id="calle" style="border: none; border-radius: 8px; background: rgb(180, 180, 180); margin: 5px 0;" required></input><br>
 
-              <label for="numero" style="margin: 5px 0;">Numero</label>
+              <label for="numero" style="margin: 5px 0;">Número</label>
               <input type="number" id="numero" style="border: none; border-radius: 8px; background: rgb(180, 180, 180); margin: 5px 0;" required></input><br>
 
               <label for="esquina" style="margin: 5px 0;">Esquina</label>
@@ -291,7 +293,7 @@ document.addEventListener("DOMContentLoaded", function () {
              <span id="subtotal-amount" class="me-3" style="margin: 10px 0;"></span><br>
 
 
-              <span style="margin: 10px 0;">Costo de envio: </span>
+              <span style="margin: 10px 0;">Costo de envío: </span>
               <span id="shipping-cost" style="margin: 10px 0;"></span><br>
 
               <hr class="my-5">
