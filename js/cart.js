@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Crear el contenedor para los botones
     let actionsContainer = document.createElement("div");
     actionsContainer.classList.add(
-      
+
       "justify-content-between",
       "mt-4",
       "actions-container"
@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       siguientePaso1.addEventListener("click", () => {
         // Agregamos para la validación de tipo de envío
-        let shipmentInputs = document.getElementsByName("envio");
+        let shipmentInputs = document.getElementsByName("tipo-envio");
         let selectedInput = false;
 
         for (let input of shipmentInputs) {
@@ -204,36 +204,44 @@ document.addEventListener("DOMContentLoaded", function () {
               
         </div>
         <hr class="my-5">
-        <button id="siguientePaso2" class="btn btn-black ms-3 mb-3">Siguiente paso</button>
+        <button type="submit" id="siguientePaso2" class="btn btn-black ms-3 mb-3">Siguiente paso</button>
+        </form>
         `;
 
-        let siguientePaso2 = document.getElementById("siguientePaso2");
+        let form = document.getElementById('direccionForm');
 
-      siguientePaso2.addEventListener("click", () => {
 
-        let subtotal = cart.reduce(
-          (acc, product) =>
-            acc +
-            (parseFloat(product.price) || 0) *
-              (parseInt(product.quantity) || 1),
-          0
-        );
-        // Recuperamos el tipo de envío desde localStorage
-        let tipoEnvio = localStorage.getItem("tipoEnvioElegido");
-        let costoEnvio = 0; // Inicializamos el costo de envío
+        form.addEventListener('submit', (event) => {
+          event.preventDefault();
 
-        // Verificamos qué valor de envío fue seleccionado y aplicamos el porcentaje correspondiente
-        if (tipoEnvio === "15") {
-          costoEnvio = subtotal * 0.15; // Premium 2 a 5 dias (15%)
-        } else if (tipoEnvio === "7") {
-          costoEnvio = subtotal * 0.07; // Estadar 5 a 8 dias (7%)
-        } else if (tipoEnvio === "5") {
-          costoEnvio = subtotal * 0.05; //Basico 12 a 15 días (5%)
-        }
 
-        let total = subtotal + costoEnvio; // Calcular el total
+          if (form.checkValidity()) {
 
-        actionsContainer.innerHTML = `
+
+            let subtotal = cart.reduce(
+              (acc, product) =>
+                acc +
+                (parseFloat(product.price) || 0) *
+                (parseInt(product.quantity) || 1),
+              0
+            );
+            // Recuperamos el tipo de envío desde localStorage
+            let tipoEnvio = localStorage.getItem("tipoEnvioElegido");
+            let costoEnvio = 0; // Inicializamos el costo de envío
+
+            // Verificamos qué valor de envío fue seleccionado y aplicamos el porcentaje correspondiente
+            if (tipoEnvio === "15") {
+              costoEnvio = subtotal * 0.15; // Premium 2 a 5 dias (15%)
+            } else if (tipoEnvio === "7") {
+              costoEnvio = subtotal * 0.07; // Estadar 5 a 8 dias (7%)
+            } else if (tipoEnvio === "5") {
+              costoEnvio = subtotal * 0.05; //Basico 12 a 15 días (5%)
+            }
+
+            let total = subtotal + costoEnvio; // Calcular el total
+
+            actionsContainer.innerHTML = `
+            
         <div class="justify-content-between align-items-center me-3 mb-3" style="width: 100%;">
 
             <div class=" me-3 mb-3" style="text-align: center;">
@@ -259,68 +267,72 @@ document.addEventListener("DOMContentLoaded", function () {
         <button id="finalizarCompra" class="btn btn-black ms-3 mb-3">Finalizar compra</button>
         `;
 
-        
+            let finishBuy = document.getElementById("finalizarCompra");
+            finishBuy.addEventListener("click", function () {
+              alert("Compra exitosa");
+
+            });
+          }
+          
+        });
 
       });
 
+    });
+
+
+    // Event listeners para botones de cantidad
+    document.querySelectorAll(".quantity-btn").forEach((button) => {
+      button.addEventListener("click", function () {
+        let index = button.getAttribute("data-index");
+        let action = button.getAttribute("data-action");
+        let quantityInput = button.parentElement.querySelector(".quantity-input");
+
+        if (action === "increase") {
+          cart[index].quantity++;
+        } else if (action === "decrease" && cart[index].quantity > 1) {
+          cart[index].quantity--;
+        }
+
+        quantityInput.value = cart[index].quantity;
+
+        let productSubtotal = button
+          .closest(".card")
+          .querySelector(".product-subtotal");
+        productSubtotal.textContent = (
+          cart[index].price * cart[index].quantity
+        ).toFixed(2);
+        updateTotals();
       });
-
     });
 
+    // event listeners para botones de eliminar
+    document.querySelectorAll(".delete-btn").forEach((button) => {
+      button.addEventListener("click", function (event) {
+        event.preventDefault();
+        let index = button.getAttribute("data-index");
+        cart.splice(index, 1);
+
+        cartContainer.innerHTML = ""; //limpiar contenedor
+        localStorage.setItem("cart", JSON.stringify(cart)); // guardar carrito actualizado
+        location.reload(); // recargar para actualizar 
+      });
+    });
+
+
+    // Borrar localStorage (Cerrar Sesión)
+    document.getElementById("cerrar").addEventListener("click", function () {
+      localStorage.removeItem("usuario");
+      localStorage.removeItem("contraseña");
+    });
+    let ObjUsuario = JSON.parse(localStorage.getItem("usuario"));
+    if (!ObjUsuario) { // Cambié aquí para verificar directamente el objeto
+      location.href = "login.html";
+    } else {
+      // Asegúrate de usar una propiedad específica
+      document.getElementById("user").innerHTML = "Cliente: " + ObjUsuario.email; // Accede a la propiedad correcta
+    }
 
   }
-  // Event listeners para botones de cantidad
-  document.querySelectorAll(".quantity-btn").forEach((button) => {
-    button.addEventListener("click", function () {
-      let index = button.getAttribute("data-index");
-      let action = button.getAttribute("data-action");
-      let quantityInput = button.parentElement.querySelector(".quantity-input");
-
-      if (action === "increase") {
-        cart[index].quantity++;
-      } else if (action === "decrease" && cart[index].quantity > 1) {
-        cart[index].quantity--;
-      }
-
-      quantityInput.value = cart[index].quantity;
-
-      let productSubtotal = button
-        .closest(".card")
-        .querySelector(".product-subtotal");
-      productSubtotal.textContent = (
-        cart[index].price * cart[index].quantity
-      ).toFixed(2);
-      updateTotals();
-    });
-  });
-
-  // event listeners para botones de eliminar
-  document.querySelectorAll(".delete-btn").forEach((button) => {
-    button.addEventListener("click", function (event) {
-      event.preventDefault();
-      let index = button.getAttribute("data-index");
-      cart.splice(index, 1);
-
-      cartContainer.innerHTML = ""; //limpiar contenedor
-      localStorage.setItem("cart", JSON.stringify(cart)); // guardar carrito actualizado
-      location.reload(); // recargar para actualizar 
-    });
-  });
-
-
-  // Borrar localStorage (Cerrar Sesión)
-  document.getElementById("cerrar").addEventListener("click", function () {
-    localStorage.removeItem("usuario");
-    localStorage.removeItem("contraseña");
-  });
-  let ObjUsuario = JSON.parse(localStorage.getItem("usuario"));
-  if (!ObjUsuario) { // Cambié aquí para verificar directamente el objeto
-    location.href = "login.html";
-  } else {
-    // Asegúrate de usar una propiedad específica
-    document.getElementById("user").innerHTML = "Cliente: " + ObjUsuario.email; // Accede a la propiedad correcta
-  }
-
-
 
 });
