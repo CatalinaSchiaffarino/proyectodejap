@@ -48,8 +48,8 @@ document.addEventListener("DOMContentLoaded", function () {
               <div class="d-flex justify-content-between mt-2">
                 <p class="card-text text-muted mb-0 me-5 mt-3" style="flex: 1;">${product.description}</p>
                 <p class="text-center mt-4" style="min-width: 120px;"><span>Subtotal:</span> <br> $<span class="product-subtotal">${(
-                  price * quantity
-                ).toFixed(2)}</span></p>
+          price * quantity
+        ).toFixed(2)}</span></p>
               </div>
             </div>
           </div>
@@ -58,8 +58,8 @@ document.addEventListener("DOMContentLoaded", function () {
       cartContainer.appendChild(productCard);
     });
 
-  let badge =  document.getElementById("cant-cart");
-  badge.innerHTML = `${cart.length}`;
+    let badge = document.getElementById("cant-cart");
+    badge.innerHTML = `${cart.length}`;
 
     // Crear el contenedor de importe total dentro del contenedor de productos
     let totalContainer = document.createElement("div");
@@ -69,14 +69,14 @@ document.addEventListener("DOMContentLoaded", function () {
       <div class="d-flex justify-content-between align-items-center">
         <h5 class="mb-0 ms-3">Importe Total:</h5>
         <span class="me-3"><strong>$${cart
-          .reduce(
-            (acc, product) =>
-              acc +
-              (parseFloat(product.price) || 0) *
-                (parseInt(product.quantity) || 1),
-            0
-          )
-          .toFixed(2)}</strong></span>
+        .reduce(
+          (acc, product) =>
+            acc +
+            (parseFloat(product.price) || 0) *
+            (parseInt(product.quantity) || 1),
+          0
+        )
+        .toFixed(2)}</strong></span>
       </div>
       <hr class="my-5">
     `;
@@ -107,6 +107,19 @@ document.addEventListener("DOMContentLoaded", function () {
     let realizarCompra = document.getElementById("realizarCompra");
 
     realizarCompra.addEventListener("click", () => {
+      // Agregamos para la validación de cantidades
+      let quantityTrue = true;
+      cart.forEach((product) => {
+        if (product.quantity <= 0) {
+          quantityTrue = false;
+          alert("Debe seleccionar una cantidad válida");
+        }
+
+      });
+
+      if (!quantityTrue) return; // Aseguramos que todos los productos tengan cantidad válida.
+
+
       actionsContainer.innerHTML = `
       <div class="d-flex justify-content-between align-items-center me-3 mb-3" style="width: 100%;">
 
@@ -121,9 +134,9 @@ document.addEventListener("DOMContentLoaded", function () {
           
           <div class=" me-3 mb-3">
             <h5>Forma de pago:</h5>
-            <input type="radio">Tarjeta de credito</input><br>
-            <input type="radio">Transferencia bancaria</input><br>
-            <input type="radio">Pago en efectivo</input>
+            <input type="radio" name= "pago" value= "tarjeta" >Tarjeta de credito</input><br>
+            <input type="radio" name= "pago" value= "transferencia" >Transferencia bancaria</input><br>
+            <input type="radio" name= "pago" value= "efectivo" >Pago en efectivo</input>
           </div>
             
       </div>
@@ -131,39 +144,62 @@ document.addEventListener("DOMContentLoaded", function () {
       <button id="siguientePaso1" class="btn btn-black ms-3 mb-3">Siguiente paso</button>
       `;
 
-      let radiobot = document.getElementsByName("tipo-envio");
-      radiobot.forEach((radio) => {
-        radio.addEventListener("change", () => {
-          let envioElegido = document.querySelector(
-            'input[name="tipo-envio"]:checked'
-          ).value;
-          localStorage.setItem("tipoEnvioElegido", envioElegido);
-        });
-      });
-
       let siguientePaso1 = document.getElementById("siguientePaso1");
 
       siguientePaso1.addEventListener("click", () => {
+        // Agregamos para la validación de tipo de envío
+        let shipmentInputs = document.getElementsByName("envio");
+        let selectedInput = false;
+
+        for (let input of shipmentInputs) {
+          if (input.checked) {
+            selectedInput = true;
+          }
+        }
+        if (!selectedInput) {
+          alert("Debes seleccionar un tipo de envío");
+          return;
+        }
+
+        //Agregamos para validación de forma de pago
+
+        let paymentsInputs = document.getElementsByName("pago");
+        let selectedPayment = false;
+
+        for (let i = 0; i < paymentsInputs.length; i++) {
+
+          console.log(paymentsInputs[i].checked);
+          if (paymentsInputs[i].checked) {
+            selectedPayment = true;
+          }
+        }
+
+        if (!selectedPayment) {
+          alert("Debes seleccionar una forma de pago");
+          return;
+        };
+
         actionsContainer.innerHTML = `
+        <form id="direccionForm">
         <div class="justify-content-between align-items-center me-3 mb-3" style="width: 100%;">
 
             <div class=" me-3 mb-3">
               <h5 style="margin: 5px 0 20px 0; text-align: center;">Direccion de envio</h5>
               
               <label for="departamento" style="margin: 5px 0;">Departamento</label>
-              <input type="text" id="departamento" style="border: none; border-radius: 8px; background: rgb(180, 180, 180); margin: 5px 0;"></input><br>
+              <input type="text" id="departamento" style="border: none; border-radius: 8px; background: rgb(180, 180, 180); margin: 5px 0;" required></input><br>
               
               <label for="localidad" style="margin: 5px 0;">Localidad</label>
-              <input type="text" id="localidad" style="border: none; border-radius: 8px; background: rgb(180, 180, 180); margin: 5px 0;"></input><br>
+              <input type="text" id="localidad" style="border: none; border-radius: 8px; background: rgb(180, 180, 180); margin: 5px 0;" required></input><br>
               
               <label for="calle" style="margin: 5px 0;">Calle</label>
-              <input type="text" id="calle" style="border: none; border-radius: 8px; background: rgb(180, 180, 180); margin: 5px 0;"></input><br>
+              <input type="text" id="calle" style="border: none; border-radius: 8px; background: rgb(180, 180, 180); margin: 5px 0;" required></input><br>
 
               <label for="numero" style="margin: 5px 0;">Numero</label>
-              <input type="number" id="numero" style="border: none; border-radius: 8px; background: rgb(180, 180, 180); margin: 5px 0;"></input><br>
+              <input type="number" id="numero" style="border: none; border-radius: 8px; background: rgb(180, 180, 180); margin: 5px 0;" required></input><br>
 
               <label for="esquina" style="margin: 5px 0;">Esquina</label>
-              <input type="text" id="esquina" style="border: none; border-radius: 8px; background: rgb(180, 180, 180); margin: 5px 0;"></input><br>
+              <input type="text" id="esquina" style="border: none; border-radius: 8px; background: rgb(180, 180, 180); margin: 5px 0;" required></input><br>
             </div>
               
         </div>
@@ -278,12 +314,12 @@ document.addEventListener("DOMContentLoaded", function () {
     localStorage.removeItem("contraseña");
   });
   let ObjUsuario = JSON.parse(localStorage.getItem("usuario"));
-    if (!ObjUsuario) { // Cambié aquí para verificar directamente el objeto
-        location.href = "login.html";
-    } else {
-        // Asegúrate de usar una propiedad específica
-        document.getElementById("user").innerHTML = "Cliente: " + ObjUsuario.email; // Accede a la propiedad correcta
-    }
+  if (!ObjUsuario) { // Cambié aquí para verificar directamente el objeto
+    location.href = "login.html";
+  } else {
+    // Asegúrate de usar una propiedad específica
+    document.getElementById("user").innerHTML = "Cliente: " + ObjUsuario.email; // Accede a la propiedad correcta
+  }
 
 
 
