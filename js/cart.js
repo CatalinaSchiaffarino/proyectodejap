@@ -241,6 +241,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let total = subtotal + costoEnvio; // Calcular el total
 
             actionsContainer.innerHTML = `
+            
         <div class="justify-content-between align-items-center me-3 mb-3" style="width: 100%;">
 
             <div class=" me-3 mb-3" style="text-align: center;">
