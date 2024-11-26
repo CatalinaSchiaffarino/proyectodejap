@@ -1,114 +1,188 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // Verificar usuario
     let ObjUsuario = JSON.parse(localStorage.getItem("usuario"));
-    if (!ObjUsuario) { // Cambié aquí para verificar directamente el objeto
+    if (!ObjUsuario) {
         location.href = "login.html";
     } else {
-        // Asegúrate de usar una propiedad específica
-        document.getElementById("user").innerHTML = "Cliente: " + ObjUsuario.email; // Accede a la propiedad correcta
-    };
+        document.getElementById("user").innerHTML = "Cliente: " + ObjUsuario.email;
+        loadUserProfile(ObjUsuario.email);
+    }
 
+    // Cargar perfil del usuario
     function loadUserProfile(email) {
         const userProfile = JSON.parse(localStorage.getItem("userProfile")) || {};
-        document.getElementById("email").value = email;
+        document.getElementById("email").value = userProfile.email || email; // Prioriza el correo guardado en el perfil
         document.getElementById("nombre").value = userProfile.nombre || '';
         document.getElementById("segundoNombre").value = userProfile.segundoNombre || '';
         document.getElementById("apellido").value = userProfile.apellido || '';
         document.getElementById("segundoApellido").value = userProfile.segundoApellido || '';
         document.getElementById("telefono").value = userProfile.telefono || '';
-        if (userProfile.fotoPerfil) {
-            document.getElementById("profilePicture").src = userProfile.fotoPerfil;
-        }
+        const fotoPerfil = userProfile.fotoPerfil || "img/fotoperfil.png";
+        document.getElementById("profilePicture").src = fotoPerfil;
     }
 
-    // Accedemos al input de la imágen
+    // Manejar la selección de imagen con recorte
     const fileInput = document.getElementById("fotoPerfil");
-
-    // Al cambiar la imágen 
-    fileInput.addEventListener("change", function(event) {
-        const file = event.target.files[0];  // Obtenemos el archivo seleccionado 
+    fileInput.addEventListener("change", (event) => {
+        const file = event.target.files[0];
         if (file) {
-            const reader = new FileReader();  // FileReader para leer el archivo seleccionado
-            reader.onload = function(e) {
-                // Mostramos la imágen
-                document.getElementById("profilePicture").src = e.target.result;
+            if (!file.type.startsWith("image/")) {
+                alert("Por favor selecciona un archivo de imagen.");
+                return;
+            }
+            if (file.size > 2 * 1024 * 1024) { // Límite de 2 MB
+                alert("La imagen debe tener un tamaño menor a 2 MB.");
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                showCropModal(e.target.result);
             };
-            reader.readAsDataURL(file); 
+            reader.readAsDataURL(file);
         }
     });
+    
 
+    function showCropModal(imageSrc) {
+        const modal = document.createElement("div");
+        modal.id = "cropModal";
+        modal.innerHTML = `
+            <div class="crop-modal-overlay">
+                <div class="crop-modal-content">
+                    <img id="cropImage" src="${imageSrc}" alt="Recortar imagen">
+                    <div class="crop-modal-actions">
+                        <button id="cropConfirm" class="btn btn-success">Confirmar</button>
+                        <button id="cropCancel" class="btn btn-danger">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    
+        const cropImage = document.getElementById("cropImage");
+        const cropper = new Cropper(cropImage, {
+            aspectRatio: 1, // Mantiene un cuadrado perfecto
+            viewMode: 2, // Ajusta la imagen al contenedor pero limita el zoom para evitar recortar fuera del lienzo
+            autoCropArea: 0.5, // Reduce el tamaño del área de recorte inicial al 50% del contenedor
+            minCropBoxWidth: 100, // Tamaño mínimo del área de recorte
+            minCropBoxHeight: 100,
+            background: false, // Oculta la cuadrícula detrás
+            zoomOnWheel: true, // Permite zoom con la rueda del mouse
+            scalable: true, // Permite escalar
+        });
+    
+        document.getElementById("cropConfirm").addEventListener("click", () => {
+            const canvas = cropper.getCroppedCanvas();
+            const croppedImage = canvas.toDataURL("image/png");
+            document.getElementById("profilePicture").src = croppedImage;
+            saveProfilePicture(croppedImage);
+            document.body.removeChild(modal);
+        });
+    
+        document.getElementById("cropCancel").addEventListener("click", () => {
+            document.body.removeChild(modal);
+        });
+    }
+    
+
+    // Guardar la imagen de perfil en localStorage
+    function saveProfilePicture(croppedImage) {
+        const userProfile = JSON.parse(localStorage.getItem("userProfile")) || {};
+        userProfile.fotoPerfil = croppedImage;
+        localStorage.setItem("userProfile", JSON.stringify(userProfile));
+    }
+    document.getElementById("removeProfilePicture").addEventListener("click", () => {
+        // Imagen predeterminada
+        const defaultImage = "img/fotoperfil.png";
+        document.getElementById("profilePicture").src = defaultImage;
+    
+        // Actualizar localStorage
+        const userProfile = JSON.parse(localStorage.getItem("userProfile")) || {};
+        userProfile.fotoPerfil = defaultImage;
+        localStorage.setItem("userProfile", JSON.stringify(userProfile));
+    
+        // Confirmación
+        alert("La imagen de perfil ha sido eliminada y se ha restaurado la predeterminada.");
+    });
+    
+    // Guardar perfil del usuario
     const form = document.getElementById("profileForm");
-    form.addEventListener("submit", function(event) {
+    form.addEventListener("submit", (event) => {
         event.preventDefault();
+
         const nombre = document.getElementById("nombre").value.trim();
         const apellido = document.getElementById("apellido").value.trim();
-        if (!nombre || !apellido) {
+        const email = document.getElementById("email").value.trim();
+
+        if (!nombre || !apellido || !email) {
             alert("Por favor, completa todos los campos obligatorios.");
             return;
         }
-        let fotoPerfil = document.getElementById("profilePicture").src;
-        // Si el usuario seleccionó una nueva imagen en el input de archivo
-        if (fileInput.files.length > 0) {
-            const reader = new FileReader();  // Creamos otro FileReader para leer el archivo
-            reader.onload = function(e) {
-                // Actualizamos la variable fotoPerfil con la nueva imagen en base64
-                fotoPerfil = e.target.result;
-                saveUserProfile(fotoPerfil);  // Guardamos
-            };
-            reader.readAsDataURL(fileInput.files[0]);  // Leemos el archivo seleccionado como base64
-        } else {
-            // Si no se seleccionó ninguna nueva imagen, guardamos el perfil con la imagen actual
-            saveUserProfile(fotoPerfil);
-        }
+
+        const fotoPerfil = document.getElementById("profilePicture").src;
+        saveUserProfile(email, fotoPerfil);
     });
 
-    function saveUserProfile(fotoPerfil) {
+    function saveUserProfile(email, fotoPerfil) {
         const userProfile = {
             nombre: document.getElementById("nombre").value.trim(),
             segundoNombre: document.getElementById("segundoNombre").value,
             apellido: document.getElementById("apellido").value.trim(),
             segundoApellido: document.getElementById("segundoApellido").value,
-            email: document.getElementById("email").value,
+            email: email,
             telefono: document.getElementById("telefono").value,
-            fotoPerfil: fotoPerfil  // Guardamos la imagen (base64) en el perfil
+            fotoPerfil: fotoPerfil
         };
 
-        // Guardamos el objeto userProfile en localStorage
+        // Guardar en localStorage
         localStorage.setItem("userProfile", JSON.stringify(userProfile));
-        alert("Datos guardados correctamente!");
+
+        // Actualizar el usuario principal en localStorage
+        localStorage.setItem("usuario", JSON.stringify({ email }));
+
+        // Actualizar el menú con el nuevo correo
+        document.getElementById("user").innerHTML = "Cliente: " + email;
+
+        // Mostrar mensaje de confirmación
+        const confirmationMsg = document.getElementById("confirmationMsg");
+        confirmationMsg.textContent = "Datos guardados correctamente.";
+        confirmationMsg.style.display = "block";
+
+        // Ocultar mensaje después de 3 segundos
+        setTimeout(() => {
+            confirmationMsg.style.display = "none";
+        }, 3000);
     }
 
-    let switchBtn = document.getElementById("switch__btn");
-    
-    /* Establecemos el theme */
-    let setTheme = (theme) => {
+    // Modo oscuro/claro
+    const switchBtn = document.getElementById("switch__btn");
+
+    const setTheme = (theme) => {
         localStorage.setItem("theme", theme);
         document.documentElement.setAttribute("data-theme", theme);
-    }
+    };
 
-    /* Cambiar entre los temas */
-    let toggleTheme = () => {
-        let currentTheme = localStorage.getItem("theme");
-        let switchTheme = currentTheme === "dark" ? "light" : "dark";
+    const toggleTheme = () => {
+        const currentTheme = localStorage.getItem("theme");
+        const switchTheme = currentTheme === "dark" ? "light" : "dark";
         setTheme(switchTheme);
-    }
+    };
 
-    /* Aplicamos el theme guardado al cargar la página */
-    let savedTheme = localStorage.getItem("theme") || "light"; // Por defecto "light" si no hay tema guardado
+    const savedTheme = localStorage.getItem("theme") || "light";
     setTheme(savedTheme);
 
-    /* Al hacer click en el botón, cambia el tema */
     switchBtn.addEventListener("click", toggleTheme);
 
-
-    document.getElementById("cerrar").addEventListener("click", function () {
+    // Cerrar sesión
+    document.getElementById("cerrar").addEventListener("click", () => {
         localStorage.removeItem("usuario");
         localStorage.removeItem("contraseña");
         localStorage.removeItem("userProfile");
         location.href = "login.html";
     });
 
-
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    let badge =  document.getElementById("cant-cart");
+    // Carrito
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const badge = document.getElementById("cant-cart");
     badge.innerHTML = `${cart.length}`;
 });
