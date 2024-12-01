@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
             localStorage.setItem("contraseña", JSON.stringify(contraseña));
 
             // Redirigir a la página de perfil o a la página principal
-            window.location.href = "my-profile.html"; // O "index.html" según tu flujo
+            window.location.href = "index.html"; // O "index.html" según tu flujo
         } else {
             alert("Por favor, completa todos los campos.");
         }
