@@ -263,7 +263,7 @@ function showComments(data) {
 
 
     // Agregar un producto al carrito
-    function addToCart(product) {
+    async function addToCart(product) {
         let cart = JSON.parse(localStorage.getItem("cart")) || [];
         const existingProduct = cart.find(item => item.id === product.id);
         if (existingProduct) {
@@ -282,6 +282,25 @@ function showComments(data) {
         localStorage.setItem("cart", JSON.stringify(cart));
         let badge = document.getElementById("cant-cart");
         badge.innerHTML = `${cart.length}`;
+
+            try {
+                const response = await fetch('http://localhost:3000/cart', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(cart)
+                });
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const result = await response.json();
+                console.log('Success:', result);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        
+        
     }
 
     // Mostrar la cantidad de productos en el carrito
